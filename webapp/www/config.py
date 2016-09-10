@@ -29,11 +29,11 @@ def merge(defaults, override):
     for k, v in defaults.items():
         if k in override:
             if isinstance(v, dict):
-                r[k] = merge(v, override[k])
+                r[k] = merge(v, override[k])        # recursion to search the element out of dict
             else:
                 r[k] = override[k]
         else:
-            r[k] = v
+            r[k] = v                                # take the default to the result if not in override
     return r
 
 
@@ -41,6 +41,7 @@ def dictext(d):
     de = DictExt()
     for k, v in d.items():
         de[k] = dictext(v) if isinstance(v, dict) else v
+        # de[k] = [v, dictext(v)][isinstance(v, dict)]      # dictext(v) if True
     return de
 
 

@@ -38,6 +38,7 @@
       <w>dgram</w>
       <w>dictext</w>
       <w>doctype</w>
+      <w>endfor</w>
       <w>findnum</w>
       <w>fromtimestamp</w>
       <w>functools</w>
