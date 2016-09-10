@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<movies shelf="New Arrivals">
+<movie>
+    <title>Enemy Behind</title>
+    <type>War, Thriller</type>
+    <format>DVD</format>
+    <rating>PG</rating>
+    <description>Talk about a US-Japan war</description>
+</movie>
+<movie>
+    <title>Transformers</title>
+    <type>Anime, Science Fiction</type>
+    <format>DVD</format>
+    <rating>R</rating>
+    <description>A schientific fiction</description>
+</movie>
+<movie>
+    <title>Trigun</title>
+    <type>Anime, Action</type>
+    <format>DVD</format>
+    <rating>PG</rating>
+    <description>Vash the Stampede!</description>
+</movie>
+<movie>
+    <title>Ishtar</title>
+    <type>Comedy</type>
+    <format>VHS</format>
+    <rating>PG</rating>
+    <description>Viewable boredom</description>
+</movie>
+</movies>

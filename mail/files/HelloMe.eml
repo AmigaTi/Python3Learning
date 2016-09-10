@@ -1,0 +1,56 @@
+X-Mda-Received: from <mx543-45.mail.sina.com.cn>([<10.55.3.45>])
+ by <mda-1-47.mda.fmail.qxg.sinanode.com> with LMTP id <261536>
+ Aug 30 2016 01:59:22 +0800 (CST)
+X-Sina-MID:04B65F9841455FA9E86896CD2BCBF1B9A800000000000001
+X-Sina-Attnum:0
+Received: from m13-102.163.com (HELO m13-102.163.com)([220.181.13.102])
+	by sina.com with SMTP
+	30 Aug 2016 01:59:22 +0800 (CST)
+X-Sender: linuxfor@163.com
+Authentication-Results: sina.com; dkim=pass (Signature verified) header.i=163.com
+Received-SPF: Pass (sina.com: SPF record at a.spf.163.com designates 220.181.13.102 as permitted sender) identity=from;
+	client-ip=220.181.13.102;
+	receiver=sina.com;
+	envelope-from=linuxfor@163.com;
+	helo=m13-102.163.com
+X-SMAIL-MID: 4482974390933
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=Ug/n8
+	KpNlem/WqfFi5jlnEH0lLPTwDKmi9NW+PsDDhs=; b=iWpxumt38asq4gYLvQD3s
+	jOFzs+HHKCiPQo/lq1kY1xj8LXIPHksMEIoQl1XTaQdniE0HrMocLLXZfeBZYGNY
+	aazi7yIw+eyuA3Z+xBIgOuszc7vC+DdH8PmW36MI3/alh13eW+Ugtf0eKRqzJUXY
+	WSpQdSL0FZLaxWj5ZAtL44=
+Received: from linuxfor$163.com ( [183.49.15.36] ) by ajax-webmail-wmsvr102
+ (Coremail) ; Tue, 30 Aug 2016 01:59:21 +0800 (CST)
+X-Originating-IP: [183.49.15.36]
+Date: Tue, 30 Aug 2016 01:59:21 +0800 (CST)
+From: me <linuxfor@163.com>
+To: linuxfor@sina.com
+Subject: HelloMe
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20160420(83524.8626) Copyright (c) 2002-2016 www.mailtech.cn 163com
+X-CM-CTRLDATA: HbnBmmZvb3Rlcl9odG09MTE0OjU2
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_4280_255763099.1472493561945"
+MIME-Version: 1.0
+Message-ID: <31ae40a0.21e.156d774a859.Coremail.linuxfor@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:ZsGowABnbq75d8RXkmoPAA--.44690W
+X-CM-SenderInfo: polq35xiruqiywtou0bp/1tbiKQHUslXlfiHXQgABs1
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+
+
+------=_Part_4280_255763099.1472493561945
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: 7bit
+
+Hello world and hello me!
+------=_Part_4280_255763099.1472493561945
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: 7bit
+
+<div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><b>Hello world and hello me!</b></div><br><br><span title="neteasefooter"><p>&nbsp;</p></span>
+------=_Part_4280_255763099.1472493561945--
+
+
