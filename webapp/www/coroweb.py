@@ -149,7 +149,7 @@ class RequestHandler(object):
                 else:
                     return web.HTTPBadRequest(text='Unsupported Content-Type: %s' % request.content_type)   # ??
             if request.method == 'GET':
-                qs = request.query_string
+                qs = request.query_string           # 请求参数
                 if qs:
                     kw = dict()
                     for k, v in parse.parse_qs(qs, True).items():
@@ -178,6 +178,7 @@ class RequestHandler(object):
                     return web.HTTPBadRequest(text='Missing argument: %s' % name)   # ?? specify keyword
         logging.info('call with args: %s' % str(kw))
         try:
+            # noinspection PyArgumentList
             r = await self._func(**kw)              #
             return r
         except APIError as e:
@@ -187,6 +188,8 @@ class RequestHandler(object):
 # static files (Images, JavaScripts, Fonts, CSS files etc.)
 def add_static(app):
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    # Adds a router and a handler for returning static files
+    # Useful for serving static content like images, javascript and css files
     app.router.add_static('/static/', path)                             # app.router.add_static
     logging.info('add static %s => %s' % ('/static', path))
 
@@ -201,10 +204,17 @@ def add_route(app, fn):
         fn = asyncio.coroutine(fn)                  #
     logging.info('add route %s %s => %s(%s)' %
                  (method, path, fn.__name__, ', '.join(inspect.signature(fn).parameters.keys())))
+    # Append handler to the end of route table
+    # add_route(method, path, handler, *, name=None, expect_handler=None)
+    #  - path may be either constant string like '/a/b/c' or variable rule like '/a/{var}'
+    #    request.match_info['name'] in handler
+    #  - method: GET/POST/PUT/DELETE/PATCH/HEAD/OPTIONS/*
     app.router.add_route(method, path, RequestHandler(app, fn))         # app.router.add_route/RequestHandler
 
 
 # 自动扫描并注册handlers.py模块中所有符合条件的函数
+# app - aiohttp.web.Application instance
+# module_name - 定义handler request模块名称
 def add_routes(app, module_name):
     n = module_name.rfind('.')
     if n == (-1):
@@ -220,6 +230,7 @@ def add_routes(app, module_name):
             method = getattr(fn, '__method__', None)
             path = getattr(fn, '__route__', None)
             if method and path:
+                # noinspection PyTypeChecker
                 add_route(app, fn)                                      # add_route
 
 

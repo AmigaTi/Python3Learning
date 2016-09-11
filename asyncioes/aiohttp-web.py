@@ -50,6 +50,10 @@ from aiohttp import web
 # create a request handler
 # A request handler is a coroutine or regular function that
 # accepts a Request instance as its only parameter and returns a Response instance
+#
+# def handler(request):
+#     return web.Response()
+#
 async def index(request):
     await asyncio.sleep(0.5)
     return web.Response(body=b'<h1>Hello world and hello me!</h1>')

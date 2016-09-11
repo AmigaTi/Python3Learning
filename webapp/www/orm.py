@@ -19,15 +19,17 @@ def log(sql, args=None):
 
 
 # 创建全局连接池__pool，缺省情况下将编码设置为utf8，自动提交事务
+# 每个HTTP请求都可以从连接池中直接获取数据库连接，而不必频繁地打开和关闭数据库连接
 async def create_pool(loop, **kw):
     logging.info('create database connection pool...')
     global __pool
+    # 创建一个MySQL数据库连接池 (coroutine)
     __pool = await aiomysql.create_pool(
         host=kw.get('host', 'localhost'),
         port=kw.get('port', 3306),
-        user=kw['user'],
-        password=kw['password'],
-        db=kw['db'],                        # mysql
+        user=kw['user'],                    # 初始化时必须指定，因为没有提供默认值
+        password=kw['password'],            # 初始化时必须指定，因为没有提供默认值
+        db=kw['db'],                        # 初始化时必须指定，因为没有提供默认值
         charset=kw.get('charset', 'utf8'),
         autocommit=kw.get('autocommit', True),
         maxsize=kw.get('maxsize', 10),
@@ -39,7 +41,7 @@ async def create_pool(loop, **kw):
 # Select
 # SQL语句的占位符是?，而MySQL的占位符是%s，select()函数在内部自动替换。
 # 注意要始终坚持使用带参数的SQL，而非拼接SQL字符串，以防止SQL注入攻击。
-# yield from将调用一个子协程(即在一个协程中调用另一个协程)并直接获得子协程的返回结果。
+# await将调用一个子协程(即在一个协程中调用另一个协程)并直接获得子协程的返回结果。
 # 若传入size参数，就通过fetchmany()获取最多指定数量的记录，否则通过fetchall()获取所有记录。
 async def select(sql, args, size=None):
     log(sql, args)
@@ -55,7 +57,7 @@ async def select(sql, args, size=None):
         return results
 
 
-# 用于SQL的Insert/Update/Delete语句，只返回影响的行数
+# 用于SQL的Insert/Update/Delete语句，只返回影响的操作行数
 async def execute(sql, args, autocommit=True):
     log(sql, args)
     global __pool
@@ -97,6 +99,7 @@ class Field(object):
         return '<%s, %s:%s>' % (self.__class__.__name__, self.column_type, self.name)
 
 
+# DDL - Data Definition Language - 数据定义语言
 class StringField(Field):
     def __init__(self, name=None, primary_key=False, default=None, ddl='varchar(100)'):
         super().__init__(name, ddl, primary_key, default)
@@ -161,6 +164,8 @@ class ModelMetaclass(type):
         escaped_fields = list(map(lambda f: '`%s`' % f, fields))
 
         # 构造默认的select/insert/update/delete语句
+        # 使用反引号是为了防止关键字冲突：
+        # select * from `select`;
         sql_select = 'select `%s`, %s from `%s`' % \
                      (primary_key, ', '.join(escaped_fields), table)
         sql_insert = 'insert into `%s` (%s, `%s`) values (%s)' % \

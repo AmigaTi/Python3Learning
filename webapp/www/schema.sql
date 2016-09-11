@@ -8,6 +8,8 @@ create database awesome;
 
 use awesome;
 
+-- create user 'www'@'localhost' identified by 'www';
+-- grant all on awesome.* to 'www'@'localhost';
 grant select, insert, update, delete on awesome.* to 'www-data'@'localhost' identified by 'www-data';
 
 create table users (

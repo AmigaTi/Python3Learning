@@ -25,8 +25,11 @@ async def test(in_loop):
     print(u)
     await u.save()
     print('tested ok...')
+    # __pool.close()
+    # await __pool.waite_closed()
 
 
+# 关闭event loop之前首先关闭连接池
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(test(loop))

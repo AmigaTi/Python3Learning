@@ -29,3 +29,8 @@ def logd(*obj):
         else:
             print(*obj)
 
+
+def logf(*, formatted, data):
+    print(formatted % tuple(data))
+
+
