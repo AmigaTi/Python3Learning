@@ -21,7 +21,7 @@ def image_thumbnail():
     print('Original image size: %sx%s' % (w, h))
 
     # 3. 缩放到50%
-    image.thumbnail((w//2, h//2))
+    image.thumbnail((w//2, h//2))       # tuple
     print('Resize image to: %sx%s' % (w//2, h//2))
 
     # 把缩放后的图像用jpeg格式保存，并重命名保存文件名

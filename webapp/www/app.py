@@ -7,7 +7,7 @@ import json
 import asyncio
 import logging
 
-from aiohttp import web         # Middleware
+from aiohttp import web         # Middleware Application Request
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 from webapp.www import orm
@@ -85,13 +85,13 @@ async def logger_factory(app, handler):
 async def auth_factory(app, handler):
     async def auth(request):
         logging.info('check user: %s %s' % (request.method, request.path))
-        request.__user__ = None             # ??
-        cookie_str = request.cookies.get(COOKIE_NAME)
+        request.__user__ = None                         # 初始化一个request.__user__
+        cookie_str = request.cookies.get(COOKIE_NAME)   # 获取cookie
         if cookie_str:
             user = await cookie2user(cookie_str)        # 从cookie中解析出user
             if user:
                 logging.info('set current user: %s' % user.email)
-                request.__user__ = user     # 把cookie解析出来并将登录用户user绑定到request对象上
+                request.__user__ = user                  # 把cookie解析出来的登录用户user绑定到request对象上
         if request.path.startswith('/manage/') and \
                 (request.__user__ is None or not request.__user__.admin):    # not request.__user__.admin
             return web.HTTPFound('/signin')
@@ -185,7 +185,7 @@ async def init(in_loop):
     # 2. Initialize render templates config
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     # 3. Register the request handler with the application’s router on a particular HTTP method and path
-    # handler -> RequestHandler -> app.router.add_route
+    # handler -> RequestHandler decorator -> app.router.add_route
     add_routes(app, 'handlers')         # ./handlers.py
     # 4. # Adds a router and a handler for returning static files (Images, JavaScripts, Fonts, CSS files etc.)
     add_static(app)

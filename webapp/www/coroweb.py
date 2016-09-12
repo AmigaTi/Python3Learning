@@ -7,7 +7,7 @@ import functools
 import inspect
 import asyncio
 
-from urllib import parse
+from urllib import parse        # Parse a query string in the URL
 from aiohttp import web
 
 from webapp.www.apierror import APIError
@@ -59,12 +59,14 @@ def post(path):
 # b == VAR_POSITIONAL               # b是可变长列表
 # c == KEYWORD_ONLY                 # c只能通过参数名的方式赋值
 # d == VAR_KEYWORD                  # d是可变长字典
+# builtins/bins-modules/bins-inspect-indeep.py
 
 def get_required_kw_args(fn):
     args = []
     params = inspect.signature(fn).parameters   #
     for name, param in params.items():
-        if param.kind == inspect.Parameter.KEYWORD_ONLY and param.default == inspect.Parameter.empty:
+        if param.kind == inspect.Parameter.KEYWORD_ONLY \
+                and param.default == inspect.Parameter.empty:
             args.append(name)
     return tuple(args)
 
@@ -119,10 +121,12 @@ def has_request_arg(fn):
 # 还有就是获取不同的函数的对应的参数，就这两个主要作用。
 
 # 简化程序：从老师的先检验再获取转换成先获取再统一验证
+
+# RequestHandler是handlers.py中的handler装饰器+++
 class RequestHandler(object):
     def __init__(self, app, fn):
         self._app = app
-        self._func = fn
+        self._func = fn             # 保存handlers.py中定义的router handler
         self._has_request_arg = has_request_arg(fn)
         self._has_var_kw_arg = has_var_kw_arg(fn)
         self._has_named_kw_args = has_named_kw_args(fn)
@@ -149,13 +153,13 @@ class RequestHandler(object):
                 else:
                     return web.HTTPBadRequest(text='Unsupported Content-Type: %s' % request.content_type)   # ??
             if request.method == 'GET':
-                qs = request.query_string           # 请求参数
+                qs = request.query_string           # The query string in the URL, e.g., id=10
                 if qs:
                     kw = dict()
-                    for k, v in parse.parse_qs(qs, True).items():
-                        kw[k] = v[0]
+                    for k, v in parse.parse_qs(qs, True).items():   # parse the Request.query_string
+                        kw[k] = v[0]                # 保存请求参数键值对到kw字典中
         if kw is None:
-            kw = dict(**request.match_info)         # request.match_info
+            kw = dict(**request.match_info)         # request.match_info // @get('/api/blogs/{id}')
         else:
             if not self._has_var_kw_arg and self._named_kw_args:
                 # remove all unnamed kw:
@@ -179,7 +183,7 @@ class RequestHandler(object):
         logging.info('call with args: %s' % str(kw))
         try:
             # noinspection PyArgumentList
-            r = await self._func(**kw)              #
+            r = await self._func(**kw)              # 调用handlers.py中定义的handler函数，并将处理后的kw参数传入
             return r
         except APIError as e:
             return dict(error=e.error, data=e.data, message=e.message)
