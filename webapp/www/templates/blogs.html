@@ -21,6 +21,7 @@
         </article>
         <hr class="uk-article-divider">
     {% endfor %}
+    {{ pagination('/?page=', page) }} <!--调用jinja2的组件html代码块函数(__base__.html)-->
     </div>
 
     <div class="uk-width-medium-1-4">

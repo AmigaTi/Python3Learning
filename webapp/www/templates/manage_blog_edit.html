@@ -6,9 +6,15 @@
 
 <script>
 
+// 具体流程是应该是这样子的：
+// 1. 点击按钮提交
+// 2. js脚本的postJSON函数把数据传出去
+// 3. @post('/api/blogs') 的处理函数把数据写进数据库，然后把生成的blog id用json传回
+// 4. 最后postJSON的第三个参数的回调函数接收到blog id的值，再用location.assign函数重定向到新建的日志网址
+
 var
-    ID = '{{ id }}',
-    action = '{{ action }}';
+    ID = '{{ id }}',                // ID = ''
+    action = '{{ action }}';        // action = '/api/blogs/id' or '/api/blogs'
 
 function initVM(blog) {
     var vm = new Vue({
@@ -23,7 +29,7 @@ function initVM(blog) {
                         $form.showFormError(err);
                     }
                     else {
-                        return location.assign('/api/blogs/' + r.id);
+                        return location.assign('/manage/blogs');        // 重定向到新建的日志网址
                     }
                 });
             }

@@ -38,7 +38,7 @@ class Blog(Model):
     name = StringField(ddl='varchar(50)')
     summary = StringField(ddl='varchar(200)')
     content = TextField()
-    Created_at = FloatField(default=time.time)
+    created_at = FloatField(default=time.time)
 
 
 class Comment(Model):

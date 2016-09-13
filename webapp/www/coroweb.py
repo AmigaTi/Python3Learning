@@ -143,13 +143,13 @@ class RequestHandler(object):
                     return web.HTTPBadRequest(text='Missing Content-Type.')     # ?? specify keyword
                 ct = request.content_type.lower()           # Content-Type
                 if ct.startswith('application/json'):
-                    params = await request.json()           #
+                    params = await request.json()           # A coroutine that reads request body decoded as json
                     if not isinstance(params, dict):
                         return web.HTTPBadRequest(text='JSON body must be object.')     # ??
-                    kw = params                             # json object
+                    kw = params                             # post json to dict object
                 elif ct.startswith('application/x-www-form-urlencoded') or ct.startswith('multipart/form-data'):
-                    params = await request.post()
-                    kw = dict(**params)
+                    params = await request.post()           # A coroutine that reads POST parameters from request body
+                    kw = dict(**params)                      #
                 else:
                     return web.HTTPBadRequest(text='Unsupported Content-Type: %s' % request.content_type)   # ??
             if request.method == 'GET':
@@ -161,26 +161,26 @@ class RequestHandler(object):
         if kw is None:
             kw = dict(**request.match_info)         # request.match_info // @get('/api/blogs/{id}')
         else:
-            if not self._has_var_kw_arg and self._named_kw_args:
+            if not self._has_var_kw_arg and self._named_kw_args:    # 如果不是VAR_KEYWORD
                 # remove all unnamed kw:
-                copy = dict()
+                copy = dict()                       # 只保存handler函数中声明的且又存在kw中的参数
                 for name in self._named_kw_args:
                     if name in kw:
                         copy[name] = kw[name]
-                kw = copy
+                kw = copy                           #
             # check named arg:
-            for k, v in request.match_info.items():         # ??
+            for k, v in request.match_info.items():   # result of route resolving // @get('/api/blogs/{id}')
                 if k in kw:
                     logging.warning('Duplicate arg name in named arg and kw args: %s' % k)
-                kw[k] = v
+                kw[k] = v                              # 保存route 解析出来的值// @get('/api/blogs/{id}')中的id
         if self._has_request_arg:                           # ??
-            kw['request'] = request
+            kw['request'] = request          # 如果handlers.py中的handler声明了request参数则将request保存到kw中
         # check required kw:
         if self._required_kw_args:
             for name in self._required_kw_args:
                 if name not in kw:          #
                     return web.HTTPBadRequest(text='Missing argument: %s' % name)   # ?? specify keyword
-        logging.info('call with args: %s' % str(kw))
+        logging.info('call handler with args: %s' % str(kw))
         try:
             # noinspection PyArgumentList
             r = await self._func(**kw)              # 调用handlers.py中定义的handler函数，并将处理后的kw参数传入

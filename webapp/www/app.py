@@ -38,7 +38,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def init_jinja2(app, **kw):
-    logging.info('init jinja2...')
+    logging.info('init jinja2 (The Python Template Engine)...')
     options = dict(
         autoescape=kw.get('autoescape', True),
         block_start_string=kw.get('block_start_string', '{%'),
@@ -75,7 +75,6 @@ def init_jinja2(app, **kw):
 async def logger_factory(app, handler):
     async def logger(request):
         logging.info('Request: %s %s' % (request.method, request.path))
-        # await asyncio.sleep(0.3)
         return await handler(request)       #
     return logger
 

@@ -53,7 +53,7 @@ async def select(sql, args, size=None):
                 results = await cur.fetchmany(size)             # 从数据库获取指定的行数
             else:
                 results = await cur.fetchall()                  # 返回所有的结果集
-        logging.info('rows returned: %s' % len(results))
+        logging.info('return rows: %s' % len(results))
         return results
 
 
@@ -149,7 +149,7 @@ class ModelMetaclass(type):
         primary_key = None
         for k, v in attrs.items():
             if isinstance(v, Field):
-                logging.info('  found mapping: %s ==> %s' % (k, v))
+                logging.info('--found mapping: %s ==> %s' % (k, v))
                 mappings[k] = v         # 保存映射关系
                 if v.primary_key:
                     if primary_key:    # 当第二次查找到主键时抛出Error

@@ -4,6 +4,10 @@
 import re
 
 
+page_str = '0'
+print([1, int(page_str)][re.match(r'\d+', page_str) is not None and int(page_str) > 1])       # 1
+
+
 # 分组
 
 # 用()表示的就是要提取的分组（Group）

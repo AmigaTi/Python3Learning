@@ -3,6 +3,7 @@
     <words>
       <w>addr</w>
       <w>addrs</w>
+      <w>adminonly</w>
       <w>aiohttp</w>
       <w>allchina</w>
       <w>allworld</w>
@@ -80,6 +81,7 @@
       <w>logf</w>
       <w>logt</w>
       <w>luod</w>
+      <w>mailto</w>
       <w>matplotlib</w>
       <w>menubar</w>
       <w>messagebox</w>
@@ -90,6 +92,7 @@
       <w>mkdir</w>
       <w>msgbox</w>
       <w>multipl</w>
+      <w>mvvm</w>
       <w>mysqladmin</w>
       <w>mysqlconnector</w>
       <w>mysqld</w>
