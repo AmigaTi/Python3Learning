@@ -28,3 +28,9 @@ os.system('start notepad firstme.txt')
 
 # 打开图片
 os.system('start goodread.png')
+
+# D:\MyDocument\MyDevelopment\PyCharmProjects\Basics\builtins\bins-modules
+print(os.path.abspath('.'))
+
+# D:\MyDocument\MyDevelopment\PyCharmProjects\Basics\builtins\bins-modules
+print(os.getcwd())

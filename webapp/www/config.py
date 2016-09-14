@@ -1,8 +1,27 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from webapp.www import config_default
-# from . import config_default              # OK
+
+config_override = {
+    'db': {
+        'host': '127.0.0.1'
+    }
+}
+
+
+config_default = {
+    'debug': True,
+    'db': {
+        'host': '127.0.0.1',
+        'port': 3306,
+        'user': 'www-data',
+        'password': 'www-data',
+        'db': 'awesome'
+    },
+    'session': {
+        'secret': 'Awesome'
+    }
+}
 
 
 class DictExt(dict):
@@ -24,45 +43,25 @@ class DictExt(dict):
         self[key] = value
 
 
-def merge(defaults, override):
-    r = {}
-    for k, v in defaults.items():
+def merge(default, override):
+    config = {}
+    for k, v in default.items():
         if k in override:
             if isinstance(v, dict):
-                r[k] = merge(v, override[k])        # recursion to search the element out of dict
+                config[k] = merge(v, override[k])        # recursion to search the element out of dict
             else:
-                r[k] = override[k]
+                config[k] = override[k]
         else:
-            r[k] = v                                # take the default to the result if not in override
-    return r
+            config[k] = v                                # take the default to the result if not in override
+    return config
 
 
 def dictext(d):
     de = DictExt()
     for k, v in d.items():
         de[k] = dictext(v) if isinstance(v, dict) else v
-        # de[k] = [v, dictext(v)][isinstance(v, dict)]      # dictext(v) if True
     return de
 
 
-configs = config_default.configs
-
-try:
-    from webapp.www import config_override
-    configs = merge(configs, config_override.configs)
-except ImportError:
-    from webapp.www import config_override
-
-configs = dictext(configs)
-
-
-
-
-
-
-
-
-
-
-
+configs = dictext(merge(config_default, config_override))   # default <-- override
 

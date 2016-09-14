@@ -12,9 +12,6 @@ from aiohttp import web
 
 from webapp.www.apierror import APIError
 
-# reference
-# http://aiohttp.readthedocs.io/en/stable/web.html
-
 
 # 在aiohttp上层封装的一个框架
 
@@ -133,9 +130,9 @@ class RequestHandler(object):
         self._named_kw_args = get_named_kw_args(fn)
         self._required_kw_args = get_required_kw_args(fn)
 
-    # coroutine
-    # 相当于重载括号运算符，像函数一样直接调用rh = RequestHandler(app, fn), rh(request)
+    # 相当于重载括号运算符，像函数一样直接调用实例对象rh = RequestHandler(app, fn), rh(request)
     async def __call__(self, request):
+        logging.info('RequestHandler...')
         kw = None
         if self._has_var_kw_arg or self._has_named_kw_args or self._required_kw_args:
             if request.method == 'POST':
@@ -192,10 +189,8 @@ class RequestHandler(object):
 # static files (Images, JavaScripts, Fonts, CSS files etc.)
 def add_static(app):
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-    # Adds a router and a handler for returning static files
-    # Useful for serving static content like images, javascript and css files
-    app.router.add_static('/static/', path)                             # app.router.add_static
-    logging.info('add static %s => %s' % ('/static', path))
+    app.router.add_static('/static/', path)          # app.router.add_static
+    logging.info('add static: %s => %s' % ('/static', path))
 
 
 # 注册一个URL处理函数
@@ -205,8 +200,8 @@ def add_route(app, fn):
     if path is None or method is None:
         raise ValueError('@get or @post not defined in %s.' % str(fn))
     if not asyncio.iscoroutinefunction(fn) and not inspect.isgeneratorfunction(fn):
-        fn = asyncio.coroutine(fn)                  #
-    logging.info('add route %s %s => %s(%s)' %
+        fn = asyncio.coroutine(fn)                   #
+    logging.info('add route: %s %s => %s(%s)' %
                  (method, path, fn.__name__, ', '.join(inspect.signature(fn).parameters.keys())))
     # Append handler to the end of route table
     # add_route(method, path, handler, *, name=None, expect_handler=None)
@@ -217,8 +212,8 @@ def add_route(app, fn):
 
 
 # 自动扫描并注册handlers.py模块中所有符合条件的函数
-# app - aiohttp.web.Application instance
-# module_name - 定义handler request模块名称
+# app          - aiohttp.web.Application instance
+# module_name  - 定义handler request模块名称
 def add_routes(app, module_name):
     n = module_name.rfind('.')
     if n == (-1):
@@ -235,7 +230,7 @@ def add_routes(app, module_name):
             path = getattr(fn, '__route__', None)
             if method and path:
                 # noinspection PyTypeChecker
-                add_route(app, fn)                                      # add_route
+                add_route(app, fn)                       # add_route
 
 
 

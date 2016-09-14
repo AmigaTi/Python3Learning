@@ -4,6 +4,8 @@
 import logging
 import aiomysql
 
+from .fields import Field
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -12,10 +14,6 @@ __pool = None
 
 def log(sql, args=None):
     logging.info('SQL: [%s] args: %s' % (sql, args or []))
-
-
-# ========================================================================
-# 数据库操作工具集
 
 
 # 创建全局连接池__pool，缺省情况下将编码设置为utf8，自动提交事务
@@ -38,17 +36,13 @@ async def create_pool(loop, **kw):
     )
 
 
-# Select
-# SQL语句的占位符是?，而MySQL的占位符是%s，select()函数在内部自动替换。
-# 注意要始终坚持使用带参数的SQL，而非拼接SQL字符串，以防止SQL注入攻击。
-# await将调用一个子协程(即在一个协程中调用另一个协程)并直接获得子协程的返回结果。
 # 若传入size参数，就通过fetchmany()获取最多指定数量的记录，否则通过fetchall()获取所有记录。
 async def select(sql, args, size=None):
     log(sql, args)
     # 异步等待连接池对象返回可以连接线程，with语句则封装了清理（关闭conn）和处理异常的工作
     async with __pool.get() as conn:
         async with conn.cursor(aiomysql.DictCursor) as cur:
-            await cur.execute(sql.replace('?', '%s'), args)     # 将sql中的'?'替换为'%s'，因为mysql语句中的占位符为%s
+            await cur.execute(sql.replace('?', '%s'), args)     # 将sql中的'?'替换为MySQL占位符'%s'
             if size:
                 results = await cur.fetchmany(size)             # 从数据库获取指定的行数
             else:
@@ -77,52 +71,11 @@ async def execute(sql, args, autocommit=True):
         return affected
 
 
-# ========================================================================
-# ORM
-# 设计ORM需要从上层调用者角度来设计。
-
 def create_args_string(num):
     lst = []
     for n in range(num):
         lst.append('?')
     return ', '.join(lst)
-
-
-class Field(object):
-    def __init__(self, name, column_type, primary_key, default):
-        self.name = name
-        self.column_type = column_type
-        self.primary_key = primary_key
-        self.default = default
-
-    def __str__(self):
-        return '<%s, %s:%s>' % (self.__class__.__name__, self.column_type, self.name)
-
-
-# DDL - Data Definition Language - 数据定义语言
-class StringField(Field):
-    def __init__(self, name=None, primary_key=False, default=None, ddl='varchar(100)'):
-        super().__init__(name, ddl, primary_key, default)
-
-
-class BooleanField(Field):
-    def __init__(self, name=None, default=False):
-        super().__init__(name, 'boolean', False, default)
-
-
-class IntegerField(Field):
-    def __init__(self, name=None, primary_key=False, default=0):
-        super().__init__(name, 'bigint', primary_key, default)
-
-
-class FloatField(Field):
-    def __init__(self, name=None, primary_key=False, default=0.0):
-        super().__init__(name, 'real', primary_key, default)
-
-
-class TextField(Field):
-    def __init__(self, name=None, default=None):
-        super().__init__(name, 'text', False, default)
 
 
 # 创建基类Model的元类
@@ -138,10 +91,9 @@ class ModelMetaclass(type):
     # attrs: 属性(方法)的字典,比如User有__table__,id,等,就作为attrs的keys
     # 排除Model类本身,因为Model类主要就是用来被继承的,其不存在与数据库表的映射
     def __new__(mcs, name, bases, attrs):
-        if name == 'Model':     # 排除Mode类本身
+        if name == 'Model':                         # 排除Mode类本身
             return type.__new__(mcs, name, bases, attrs)
-        # 找到表名，若没有定义__table__属性,将类名作为表名
-        table = attrs.get('__table__', name)
+        table = attrs.get('__table__', name)        # 找到表名，若没有定义__table__属性,将类名作为表名
         logging.info('found model: %s (table: %s)' % (name, table))
         # 获取所有的Field和主键名
         mappings = dict()
@@ -150,22 +102,21 @@ class ModelMetaclass(type):
         for k, v in attrs.items():
             if isinstance(v, Field):
                 logging.info('--found mapping: %s ==> %s' % (k, v))
-                mappings[k] = v         # 保存映射关系
+                mappings[k] = v                 # 保存映射关系
                 if v.primary_key:
-                    if primary_key:    # 当第二次查找到主键时抛出Error
+                    if primary_key:             # 当第二次查找到主键时抛出Error
                         raise RuntimeError('Duplicate primary key for field: %s' % k)
-                    primary_key = k     # 保存第一次找到的主键
+                    primary_key = k             # 保存第一次找到的主键
                 else:
-                    fields.append(k)    # 将非主键的字段保存到fields中
+                    fields.append(k)            # 将非主键的字段保存到fields中
         if not primary_key:
             raise RuntimeError('Primary key not found.')        # StandardError在Python3中被移除
-        for k in mappings.keys():       # 移除类属性
+        for k in mappings.keys():               # 移除类属性
             attrs.pop(k)
         escaped_fields = list(map(lambda f: '`%s`' % f, fields))
 
         # 构造默认的select/insert/update/delete语句
-        # 使用反引号是为了防止关键字冲突：
-        # select * from `select`;
+        # 使用反引号是为了防止关键字冲突：select * from `select`;
         sql_select = 'select `%s`, %s from `%s`' % \
                      (primary_key, ', '.join(escaped_fields), table)
         sql_insert = 'insert into `%s` (%s, `%s`) values (%s)' % \
@@ -296,21 +247,4 @@ class Model(dict, metaclass=ModelMetaclass):
         rows = await execute(self.__delete__, args)
         if rows != 1:
             logging.warning('failed to remove by primary key: affected rows: %s' % rows)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

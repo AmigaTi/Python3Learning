@@ -115,6 +115,8 @@
       <w>postgresql</w>
       <w>proc</w>
       <w>proot</w>
+      <w>pymonitor</w>
+      <w>pymysql</w>
       <w>pyplot</w>
       <w>pysql</w>
       <w>randalphanumeric</w>

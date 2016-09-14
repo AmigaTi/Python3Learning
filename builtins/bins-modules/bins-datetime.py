@@ -62,7 +62,7 @@ print('str -> datetime')
 print(dt)                           # 2016-08-25 01:16:16
 
 t = time.gmtime(time.time())
-s = time.strftime('%Z', t)
+
 print(s)                            # China Standard Time
 # -------------------------------------------------
 date_str = 'Wed, 27 May 2015 11:00 am CST'[:-4]     # 去掉CST时区信息

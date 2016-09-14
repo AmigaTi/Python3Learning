@@ -88,7 +88,6 @@ async def test():
     }
 
 
-# 浏览器访问：http://localhost:9000/
 @get('/')
 async def index(*, page='1'):
     page_index = get_page_index(page)
@@ -106,7 +105,10 @@ async def index(*, page='1'):
 
 
 def text2html(text):
-    lines = map(lambda s: '<p>%s</p>' % s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'), filter(lambda s: s.strip() != '', text.split('\n')))
+    lines = map(
+        lambda s: '<p>%s</p>' % s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'),
+        filter(lambda s: s.strip() != '', text.split('\n'))
+    )
     return ''.join(lines)
 
 
@@ -114,10 +116,9 @@ def text2html(text):
 async def get_blog(id):
     blog = await Blog.find(id)
     comments = await Comment.findall('blog_id=?', [id], orderBy='created_at desc')
-    for c in comments:
+    for c in comments:                                          # 将全部的评论从文本转成html格式
         c.html_content = text2html(c.content)
-    blog.html_content = markdown2.markdown(blog.content)
-    # blog.html_content = blog.content
+    blog.html_content = markdown2.markdown(blog.content)        # 支持Markdown格式文本编辑
     return {
         '__template__': 'blog.html',
         'blog': blog,
@@ -125,10 +126,8 @@ async def get_blog(id):
     }
 
 
-# 浏览器访问：http://localhost:9000/api/users
-# 返回JSON数据
 # 一个API也是一个URL的处理函数，直接通过一个@api来把函数变成JSON格式的REST API，
-# 这样获取注册用户可以用一个API实现如下代码所示。
+# 这样获取注册用户可以用一个API实现。
 # 只要返回一个dict，后续的middleware拦截器response_factory就可以把结果序列化为JSON并返回
 @get('/api/users')
 async def api_get_users(*, page='1'):
@@ -156,13 +155,13 @@ async def api_get_users(*, page='1'):
 # 当用户输入了正确的密码登录成功后，服务器可以从数据库取到用户的id，并按照如下方式计算出一个字符串：
 # "用户id" + "过期时间" + SHA1("用户id" + "用户密码" + "过期时间" + "SecretKey")
 # 当浏览器发送cookie到服务器端后，服务器可以拿到的信息包括：
-# 用户id/过期时间/SHA1值
+# 用户id//过期时间//SHA1值
 # 如果未到过期时间，服务器就根据用户id查找用户密码，并计算：
 # SHA1("用户id" + "用户密码" + "过期时间" + "SecretKey")
 # 并与浏览器cookie中的SHA1值进行比较，如果相等则说明用户已登录，否则cookie就是伪造的。
 
-# 对于每个URL处理函数，如果我们都去写解析cookie的代码，那会导致代码重复很多次。
-# 利用middle在处理URL之前，把cookie解析出来，并将登录用户绑定到request对象上，
+# 对于每个URL处理函数，如果都去写解析cookie的代码，那会导致代码重复很多次。
+# 利用Middleware在处理URL之前，把cookie解析出来，并将登录用户绑定到request对象上，
 # 这样后续的URL处理函数就可以直接拿到登录用户。
 
 
@@ -207,7 +206,6 @@ async def cookie2user(cookie_str):
 
 # 用户登录界面
 # signin.html中的js代码会将登录信息封装成JSON，然后当点击按钮时自动提交POST请求/api/authenticate
-# 浏览器访问：http://localhost:9000/signin
 @get('/signin')
 def signin():
     return {
@@ -252,7 +250,6 @@ def signout(request):
 
 # Server -> Client
 # 用户注册界面 - 由服务器端Server返回给浏览器客户端Client
-# 浏览器访问：http://localhost:9000/register
 # 当点击注册按钮时，自动提交POST请求/api/users
 @get('/register')
 def register():
@@ -288,13 +285,6 @@ async def api_register_user(*, email, name, passwd):
     await user.save()           # 保存注册用户的信息
     # make session cookie:
     r = web.Response()
-    # setting cookies, allows to specify max_age in a single call
-    # set_cookie(name, value, *, path='/', expires=None, domain=None, max_age=None,
-    # secure=None, httponly=None, version=None)
-    # name (str) - cookie name
-    # value (str) - cookie value
-    # max_age (int) - defines the lifetime of the cookie, in seconds
-    # httponly (bool) - True if the cookie HTTP only
     r.set_cookie(COOKIE_NAME, user2cookie(user, 86400), max_age=86400, httponly=True)   # 86400s = 24h = a day
     user.passwd = '******'
     r.content_type = 'application/json'
@@ -315,7 +305,6 @@ def manage_comments(*, page='1'):
     }
 
 
-# 浏览器访问：http://localhost:9000/manage/blogs
 @get('/manage/blogs')
 def manage_blogs(*, page='1'):
     return {
@@ -324,7 +313,6 @@ def manage_blogs(*, page='1'):
     }
 
 
-# 浏览器访问：http://localhost:9000/manage/blogs/create
 # 使用简单易用的MVVM框架Vue.js来实现创建Blog的页面manage_blog_edit.html
 @get('/manage/blogs/create')
 def manage_create_blog():
@@ -474,18 +462,3 @@ async def api_delete_comments(id, request):
     await c.remove()
     return dict(id=id)
 
-
-'''
-HTTP: 500
-服务器内部错误
-'''
-
-'''
-    if request.__user__ is None or not request.__user__.admin:
-AttributeError: 'Request' object has no attribute '__user__'
-'''
-
-'''
-# 数据库中的表缺少user_id字段
-pymysql.err.InternalError: (1054, "42S22Unknown column 'user_id' in 'field list'")
-'''

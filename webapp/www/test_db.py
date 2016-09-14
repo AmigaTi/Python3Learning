@@ -3,11 +3,11 @@
 
 import sys
 import asyncio
+from datetime import datetime
+
 from webapp.www import orm
 from webapp.www.models import User
-# from webapp.www.models import Blog
-# from webapp.www.models import Comment
-from datetime import datetime
+
 
 
 def gen_rand_string():
