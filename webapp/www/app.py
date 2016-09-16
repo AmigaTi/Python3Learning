@@ -27,6 +27,8 @@ async def init(loop):
         loop=loop,
         middlewares=[logger_factory, auth_factory, response_factory]        # Register Middleware factory
     )
+    # init to create a admin user when create server firstly
+    await helper.init_admin_user()
     # 2. Initialize render templates config
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     # 3. Register the request handler with the application’s router on a particular HTTP method and path

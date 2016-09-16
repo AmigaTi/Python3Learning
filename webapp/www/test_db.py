@@ -9,7 +9,6 @@ from webapp.www import orm
 from webapp.www.models import User
 
 
-
 def gen_rand_string():
     unique_id = datetime.now().strftime('%Y%m%d%H%M%S')
     test_name = 'test' + unique_id

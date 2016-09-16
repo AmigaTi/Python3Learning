@@ -13,6 +13,9 @@ from aiohttp import web
 from webapp.www.apierror import APIError
 
 
+logging.basicConfig(level=logging.INFO)
+
+
 # 在aiohttp上层封装的一个框架
 
 

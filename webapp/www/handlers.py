@@ -14,7 +14,6 @@ from webapp.www.models import User
 from webapp.www.models import Blog
 from webapp.www.models import Comment
 from webapp.www.helper import Page
-from webapp.www.helper import cookie
 from webapp.www import helper
 from webapp.www.apierror import APIError
 from webapp.www.apierror import APIValueError
@@ -132,7 +131,8 @@ async def authenticate(*, email, passwd):
         raise APIValueError('passwd', 'Invalid password.')
     # authenticate ok, set cookie:
     r = web.Response()
-    r.set_cookie(cookie.name, helper.user2cookie(user, 86400), max_age=86400, httponly=True)
+    cookie_name = helper.get_cookie_name()
+    r.set_cookie(cookie_name, helper.user2cookie(user, 86400), max_age=86400, httponly=True)
     user.passwd = '******'
     r.content_type = 'application/json'
     r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
@@ -143,7 +143,8 @@ async def authenticate(*, email, passwd):
 def signout(request):
     referer = request.headers.get('Referer')
     r = web.HTTPFound(referer or '/')
-    r.set_cookie(cookie.name, '-deleted-', max_age=0, httponly=True)
+    cookie_name = helper.get_cookie_name()
+    r.set_cookie(cookie_name, '-deleted-', max_age=0, httponly=True)
     logging.info('user signed out.')
     return r
 
@@ -179,7 +180,8 @@ async def api_register_user(*, email, name, passwd):
     await user.save()           # 保存注册用户的信息
     # make session cookie:
     r = web.Response()
-    r.set_cookie(cookie.name, helper.user2cookie(user, 86400), max_age=86400, httponly=True)   # 86400s = 24h = a day
+    cookie_name = helper.get_cookie_name()
+    r.set_cookie(cookie_name, helper.user2cookie(user, 86400), max_age=86400, httponly=True)   # 86400s = 24h = a day
     user.passwd = '******'
     r.content_type = 'application/json'
     r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')

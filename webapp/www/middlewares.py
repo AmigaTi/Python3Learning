@@ -5,8 +5,7 @@ import json
 import logging
 
 from aiohttp import web                         # Middleware Application Request
-from webapp.www.helper import cookie2user
-from webapp.www.helper import cookie
+from webapp.www import helper
 
 
 logging.basicConfig(level=logging.INFO)
@@ -50,9 +49,10 @@ async def auth_factory(app, handler):
     async def auth(request):
         logging.info('check user: %s %s' % (request.method, request.path))
         request.__user__ = None                         # 初始化一个request.__user__
-        cookie_str = request.cookies.get(cookie.name)   # 获取cookie
+        cookie_name = helper.get_cookie_name()
+        cookie_str = request.cookies.get(cookie_name)   # 获取cookie
         if cookie_str:
-            user = await cookie2user(cookie_str)        # 从cookie中解析出user
+            user = await helper.cookie2user(cookie_str)        # 从cookie中解析出user
             if user:
                 logging.info('set current user: %s' % user.email)
                 request.__user__ = user                  # 把cookie解析出来的当前登录用户user绑定到request对象上

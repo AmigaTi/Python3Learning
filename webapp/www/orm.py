@@ -4,10 +4,11 @@
 import logging
 import aiomysql
 
-from .fields import Field
+from webapp.www.fields import Field
 
 
 logging.basicConfig(level=logging.INFO)
+
 
 __pool = None
 

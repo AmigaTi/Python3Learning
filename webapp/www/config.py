@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+# user customized config
 config_override = {
     'db': {
         'host': '127.0.0.1'
@@ -9,6 +10,7 @@ config_override = {
 }
 
 
+# server default config
 config_default = {
     'server': {
         'host': '127.0.0.1',

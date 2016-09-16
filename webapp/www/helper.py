@@ -16,9 +16,6 @@ from webapp.www.models import next_id
 logging.basicConfig(level=logging.INFO)
 
 
-cookie = configs.cookie
-
-
 # 存储分页信息，用于分页显示Blog的功能
 # Page.limit/Page.offset 用于SQL语句的条件设定limit=(p.offset, p.limit)
 class Page(object):
@@ -88,7 +85,7 @@ def make_passwd_sha1(uid, password):
 
 
 def make_user_sha1(user, expires):
-    user_str = '%s-%s-%s-%s' % (user.id, user.passwd, expires, cookie.key)
+    user_str = '%s-%s-%s-%s' % (user.id, user.passwd, expires, configs.cookie.key)
     return hashlib.sha1(user_str.encode('utf-8')).hexdigest()
 
 
@@ -126,11 +123,42 @@ async def cookie2user(cookie_str):
         return None
 
 
+# --------------------------------------------------------------------------------------------
+def get_input(infos=None):
+    info_list = ['name', 'email', 'password'] if infos is None else list(infos)     # infos -> tuple
+    result = []
+    for info in info_list:
+        while True:
+            input_info = input("admin's %s: " % info).strip()
+            if not input_info:
+                print('invalid %s.' % info)
+                continue
+            if info == 'email' and not _RE_EMAIL.match(input_info):
+                print('invalid email.')
+                continue
+            result.append(input_info)
+            break
+    return tuple(result)
+
+
+async def check_admin_user():
+    logging.info('check the default admin user...')
+    users = await User.findall('admin=?', [True])  # 检查登录用户是否存在，使用邮箱来查找
+    return False if len(users) == 0 else True
+
+
+async def init_admin_user():
+    flag = await check_admin_user()
+    if flag is True:
+        return
+    logging.info('create admin user...')
+    print('\n------------------------------------')
+    name, email, password = get_input()
+    print('------------------------------------\n')
+    await create_admin_user(name, email, password)
+
+
 # create a admin user
-# admin: True
-# name: linuxfor
-# email: linuxfor@163.com
-# password: linuxfor@8
 async def create_admin_user(name, email, password):
     password_str = '%s:%s' % (email, password)      # email: password
     sha1 = hashlib.sha1()
@@ -143,6 +171,7 @@ async def create_admin_user(name, email, password):
     image_str = 'http://www.gravatar.com/avatar/%s?d=mm&s=120' % email_md5
     user = User(id=uid, name=name.strip(), email=email, passwd=passwd_sha1, image=image_str, admin=True)
     await user.save()
+# --------------------------------------------------------------------------------------------
 
 
 # 获取定义在config.py中的关于数据库的配置信息
@@ -162,4 +191,19 @@ def get_server_conf():
     host = server.host
     port = server.port
     return host, port                           # tuple
+
+
+def get_cookie_conf():
+    cookie = configs.cookie
+    name = cookie.name
+    key = cookie.key
+    return name, key
+
+
+def get_cookie_name():
+    return configs.cookie.name
+
+
+def get_cookie_key():
+    return configs.cookie.key
 
