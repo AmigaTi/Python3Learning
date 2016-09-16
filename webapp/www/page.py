@@ -4,13 +4,6 @@
 
 # 存储分页信息，用于分页显示Blog的功能
 # Page.limit/Page.offset 用于SQL语句的条件设定limit=(p.offset, p.limit)
-# >>> p2 = Page(90, 9, 10)
-# >>> p2.page_count
-# 9
-# >>> p2.offset
-# 80
-# >>> p2.limit
-# 10
 class Page(object):
     def __init__(self, item_count, page_index=1, page_size=10):
         self.item_count = item_count                            # blog总篇数
@@ -26,10 +19,4 @@ class Page(object):
             self.limit = self.page_size                         # 保存页大小
         self.has_next = self.page_index < self.page_count       # 是否有下一页，当页索引小于页总数时为True
         self.has_previous = self.page_index > 1                 # 是否有上一页，当页索引大于1时为True
-
-    def __str__(self):
-        return 'Page(item_count: %s, page_count: %s, page_index: %s, page_size: %s, offset: %s, limit: %s)' % \
-               (self.item_count, self.page_count, self.page_index, self.page_size, self.offset, self.limit)
-
-    __repr__ = __str__
 

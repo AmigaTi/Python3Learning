@@ -2,9 +2,9 @@
 -- > cd www/
 -- > mysql -u root -proot@42 < schema.sql
 
-drop database if exists awesome;
+-- drop database if exists awesome;
 
-create database awesome;
+create database if no exists awesome;
 
 use awesome;
 
@@ -12,7 +12,7 @@ use awesome;
 -- grant all on awesome.* to 'www'@'localhost';
 grant select, insert, update, delete on awesome.* to 'www-data'@'localhost' identified by 'www-data';
 
-create table users (
+create table if no exists users (
     `id` varchar(50) not null,
     `email` varchar(50) not null,
     `passwd` varchar(50) not null,
@@ -25,7 +25,7 @@ create table users (
     primary key (`id`)
 ) engine=innodb default charset=utf8;
 
-create table blogs (
+create table if no exists blogs (
     `id` varchar(50) not null,
     `user_id` varchar(50) not null,
     `user_name` varchar(50) not null,
@@ -38,7 +38,7 @@ create table blogs (
     primary key (`id`)
 ) engine=innodb default charset=utf8;
 
-create table comments (
+create table if no exists comments (
     `id` varchar(50) not null,
     `blog_id` varchar(50) not null,
     `user_id` varchar(50) not null,

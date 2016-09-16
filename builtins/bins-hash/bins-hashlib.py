@@ -36,6 +36,11 @@ print(sha1.hexdigest())     # 2c76b57293ce30acef38d98f6046927161b46a44
 print(sha1.digest_size)     # 20 (bytes)
 print('---------------------------------')
 
+print('register-----------------------')
+sha1 = hashlib.sha1()
+sha1.update('hellome@163.com:hellome@7'.encode('utf-8'))
+print(sha1.hexdigest() == '6496432b3fb78e671ab62ba675862a4b493ab61e')     # 6496432b3fb78e671ab62ba675862a4b493ab61e
+
 
 # ====================================================================
 # 1. 存储用户名和MD5加密口令的数据库登录验证实例

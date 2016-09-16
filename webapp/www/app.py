@@ -13,16 +13,18 @@ from webapp.www.middlewares import auth_factory
 from webapp.www.middlewares import response_factory
 from webapp.www.renderengine import init_jinja2
 from webapp.www.renderengine import datetime_filter
+from webapp.www import helper
 
 
 logging.basicConfig(level=logging.INFO)
 
 
-async def init(in_loop):
-    await orm.create_pool(loop=in_loop, host='127.0.0.1', port=3306, user='www-data', password='www-data', db='awesome')
+async def init(loop):
+    host, port, user, password, db = helper.get_database_conf()
+    await orm.create_pool(loop=loop, host=host, port=port, user=user, password=password, db=db)
     # 1. Create an Application instance, Application is a dict-like object
     app = web.Application(
-        loop=in_loop,
+        loop=loop,
         middlewares=[logger_factory, auth_factory, response_factory]        # Register Middleware factory
     )
     # 2. Initialize render templates config
@@ -34,12 +36,18 @@ async def init(in_loop):
     add_static(app)
     # 5. Create a TCP server (socket type SOCK_STREAM) bound to host and port
     # web.Application.make_handler - Creates HTTP protocol factory for handling requests
-    server = await loop.create_server(app.make_handler(), '127.0.0.1', 9000)
-    logging.info('server started at http://127.0.0.1:9000...')
+    host, port = helper.get_server_conf()
+    server = await loop.create_server(app.make_handler(), host, port)
+    logging.info('server started at http://%s:%d...' % (host, port))
     return server
 
 
-loop = asyncio.get_event_loop()         #
-loop.run_until_complete(init(loop))     #
-loop.run_forever()                      #
+def run():
+    loop = asyncio.get_event_loop()         #
+    loop.run_until_complete(init(loop))     #
+    loop.run_forever()                      #
+
+
+if __name__ == '__main__':
+    run()
 

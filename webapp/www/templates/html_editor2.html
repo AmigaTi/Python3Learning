@@ -1,0 +1,97 @@
+{% extends '__base__.html' %} {% block title %}编辑日志{% endblock %} {% block beforehead %}
+<!-- Codemirror and marked dependencies -->
+<link rel="stylesheet" href="/static/css/uikit/codemirror.css">
+<link rel="stylesheet" href="/static/css/uikit/show-hint.css">
+<link rel="stylesheet" href="/static/css/uikit/docs.css">
+<script src="/static/js/uikit/codemirror.js"></script>
+<script src="/static/js/uikit/marked.js"></script>
+<script src="/static/js/uikit/markdown.js"></script>
+<script src="/static/js/uikit/docs.js"></script>
+<!-- HTML editor CSS and JavaScript -->
+<link rel="stylesheet" href="/static/css/uikit/htmleditor.css">
+<script src="/static/js/uikit/htmleditor.js"></script>
+{% endblock %} {% block content %}
+<div class="uk-width-2-3">
+    <form id="comment-form" class="uk-form" style="">
+        <fieldset>
+            <div class="uk-alert uk-alert-danger uk-hidden" style="display:none"></div>
+            <div class="uk-form-row">
+                <label>标题:</label>
+            </div>
+            <div class="uk-form-row">
+                <input type="text" name="name" maxlength="100" style="width:100%">
+            </div>
+            <div class="uk-form-row">
+                <label>内容:</label>
+            </div>
+            <div class="uk-form-row x-textarea">
+                <div class="uk-htmleditor uk-clearfix" data-mode="split">
+                    <div class="uk-htmleditor-navbar">
+                        <ul class="uk-htmleditor-navbar-nav uk-htmleditor-toolbar">
+                            <li><a data-htmleditor-button="bold" title="Bold" data-uk-tooltip=""><i class="uk-icon-bold"></i></a></li>
+                            <li><a data-htmleditor-button="italic" title="Italic" data-uk-tooltip=""><i class="uk-icon-italic"></i></a></li>
+                            <li><a data-htmleditor-button="code" title="code" data-uk-tooltip=""><i class="uk-icon-code"></i> 插入代码</a></li>
+                            <li><a data-htmleditor-button="link" title="Link" data-uk-tooltip=""><i class="uk-icon-link"></i></a></li>
+                            <li><a data-htmleditor-button="blockquote" title="Blockquote" data-uk-tooltip=""><i class="uk-icon-quote-right"></i></a></li>
+                            <li><a data-htmleditor-button="listUl" title="Unordered List" data-uk-tooltip=""><i class="uk-icon-list-ul"></i></a></li>
+                            <li><a data-htmleditor-button="listOl" title="Ordered List" data-uk-tooltip=""><i class="uk-icon-list-ol"></i></a></li>
+                        </ul>
+                        <div class="uk-htmleditor-navbar-flip">
+                            <ul class="uk-htmleditor-navbar-nav">
+                                <li class="uk-htmleditor-button-code"><a>Markdown</a></li>
+                                <li class="uk-htmleditor-button-preview"><a>Preview</a></li>
+                                <li><a data-htmleditor-button="fullscreen"><i class="uk-icon-expand"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="uk-htmleditor-content">
+                        <div class="uk-htmleditor-code">
+                            <textarea data-uk-check-display="1" style="display: none;"></textarea>
+                            <div class="CodeMirror cm-s-default CodeMirror-wrap" style="height: 500px;">
+                                <div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 14px; left: 14px;">
+                                    <textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea>
+                                </div>
+                                <div class="CodeMirror-hscrollbar" style="left: 0px;">
+                                    <div style="height: 100%; min-height: 1px; width: 0px;"></div>
+                                </div>
+                                <div class="CodeMirror-vscrollbar">
+                                    <div style="min-width: 1px; height: 0px;"></div>
+                                </div>
+                                <div class="CodeMirror-scrollbar-filler"></div>
+                                <div class="CodeMirror-gutter-filler"></div>
+                                <div class="CodeMirror-scroll" tabindex="-1">
+                                    <div class="CodeMirror-sizer" style="margin-left: 0px; min-height: 22px;">
+                                        <div style="position: relative; top: 0px;">
+                                            <div class="CodeMirror-lines">
+                                                <div style="position: relative; outline: none;">
+                                                    <div class="CodeMirror-measure"></div>
+                                                    <div class="CodeMirror-measure"></div>
+                                                    <div style="position: relative; z-index: 1;"></div>
+                                                    <div class="CodeMirror-cursors">
+                                                        <div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 14px;">&nbsp;</div>
+                                                    </div>
+                                                    <div class="CodeMirror-code"><pre class=""><span style="padding-right: 0.1px;"><span>&#8203;</span></span></pre></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="position: absolute; height: 30px; width: 1px; top: 22px;"></div>
+                                    <div class="CodeMirror-gutters" style="display: none; height: 480px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-htmleditor-preview" style="height: 500px;">
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-check"></i> 发布</button>
+                &nbsp;&nbsp;
+                <button type="button" class="uk-button x-cancel"><i class="uk-icon-close"></i> 取消</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

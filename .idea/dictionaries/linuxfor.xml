@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="linuxfor">
     <words>
+      <w>addon</w>
       <w>addr</w>
       <w>addrs</w>
       <w>adminonly</w>
@@ -27,6 +28,7 @@
       <w>classmethod</w>
       <w>classname</w>
       <w>cnty</w>
+      <w>codemirror</w>
       <w>colorus</w>
       <w>columnspan</w>
       <w>comunidad</w>
@@ -62,7 +64,9 @@
       <w>helloworld</w>
       <w>hexdigest</w>
       <w>hotworld</w>
+      <w>htmleditor</w>
       <w>httponly</w>
+      <w>ikit</w>
       <w>imgs</w>
       <w>indeep</w>
       <w>inet</w>
@@ -83,6 +87,8 @@
       <w>luod</w>
       <w>mailto</w>
       <w>matplotlib</w>
+      <w>maxbytes</w>
+      <w>maxsplitsize</w>
       <w>menubar</w>
       <w>messagebox</w>
       <w>metry</w>
@@ -137,6 +143,7 @@
       <w>saus</w>
       <w>scrl</w>
       <w>selectmode</w>
+      <w>sendfile</w>
       <w>sequency</w>
       <w>sessionmaker</w>
       <w>shellever</w>
@@ -153,6 +160,7 @@
       <w>sohu</w>
       <w>sqlalchemy</w>
       <w>sqlite</w>
+      <w>startsecs</w>
       <w>starttls</w>
       <w>stringio</w>
       <w>strptime</w>

@@ -5,8 +5,8 @@ import json
 import logging
 
 from aiohttp import web                         # Middleware Application Request
-from webapp.www.handlers import COOKIE_NAME
-from webapp.www.handlers import cookie2user
+from webapp.www.helper import cookie2user
+from webapp.www.helper import cookie
 
 
 logging.basicConfig(level=logging.INFO)
@@ -50,7 +50,7 @@ async def auth_factory(app, handler):
     async def auth(request):
         logging.info('check user: %s %s' % (request.method, request.path))
         request.__user__ = None                         # 初始化一个request.__user__
-        cookie_str = request.cookies.get(COOKIE_NAME)   # 获取cookie
+        cookie_str = request.cookies.get(cookie.name)   # 获取cookie
         if cookie_str:
             user = await cookie2user(cookie_str)        # 从cookie中解析出user
             if user:
@@ -120,3 +120,4 @@ async def response_factory(app, handler):
         resp.content_type = 'text/plain;charset=utf-8'
         return resp
     return response
+
