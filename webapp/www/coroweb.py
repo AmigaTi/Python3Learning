@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import types
 import logging
 import functools
 import inspect
@@ -55,12 +56,10 @@ def post(path):
     return decorator
 
 
-# a == POSITIONAL_OR_KEYWORD        # a是用位置或参数名都可赋值的
-# b == VAR_POSITIONAL               # b是可变长列表
-# c == KEYWORD_ONLY                 # c只能通过参数名的方式赋值
-# d == VAR_KEYWORD                  # d是可变长字典
-# builtins/bins-modules/bins-inspect-indeep.py
-
+# POSITIONAL_OR_KEYWORD        # 位置参数，默认参数
+# VAR_POSITIONAL               # 可变参数tuple
+# VAR_KEYWORD                  # 关键字参数dict
+# KEYWORD_ONLY                 # 命名关键字参数
 def get_required_kw_args(fn):
     args = []
     params = inspect.signature(fn).parameters   #
@@ -133,7 +132,7 @@ class RequestHandler(object):
         self._named_kw_args = get_named_kw_args(fn)
         self._required_kw_args = get_required_kw_args(fn)
 
-    # 相当于重载括号运算符，像函数一样直接调用实例对象rh = RequestHandler(app, fn), rh(request)
+    # rh = RequestHandler(app, fn), rh(request)
     async def __call__(self, request):
         logging.info('RequestHandler...')
         kw = None
@@ -192,60 +191,104 @@ class RequestHandler(object):
 # static files (Images, JavaScripts, Fonts, CSS files etc.)
 def add_static(app):
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-    app.router.add_static('/static/', path)          # app.router.add_static
-    logging.info('add static: %s => %s' % ('/static', path))
+    app.router.add_static('/static/', path)
+    logging.info('add static: %s => %s' % ('/static/', path))
 
 
-# 注册一个URL处理函数
+# 注册一个routes.py中的URL处理函数
 def add_route(app, fn):
-    method = getattr(fn, '__method__', None)        # 由装饰器get('/path')/post('/path')得到method和path两个参数
-    path = getattr(fn, '__route__', None)           # 这些被统一定义在handlers.py模块下
+    method = getattr(fn, '__method__', None)
+    path = getattr(fn, '__route__', None)
     if path is None or method is None:
         raise ValueError('@get or @post not defined in %s.' % str(fn))
     if not asyncio.iscoroutinefunction(fn) and not inspect.isgeneratorfunction(fn):
         fn = asyncio.coroutine(fn)                   #
-    logging.info('add route: %s %s => %s(%s)' %
-                 (method, path, fn.__name__, ', '.join(inspect.signature(fn).parameters.keys())))
-    # Append handler to the end of route table
-    # add_route(method, path, handler, *, name=None, expect_handler=None)
-    #  - path may be either constant string like '/a/b/c' or variable rule like '/a/{var}'
-    #    request.match_info['name'] in handler
-    #  - method: GET/POST/PUT/DELETE/PATCH/HEAD/OPTIONS/*
-    app.router.add_route(method, path, RequestHandler(app, fn))         # app.router.add_route/RequestHandler
+    args = ', '.join(inspect.signature(fn).parameters.keys())
+    logging.info('add route: %s %s => %s(%s)' % (method, path, fn.__name__, args))
+    app.router.add_route(method, path, RequestHandler(app, fn))
 
 
-# 自动扫描并注册handlers.py模块中所有符合条件的函数
-# app          - aiohttp.web.Application instance
-# module_name  - 定义handler request模块名称
+# module.name = package.module
+# 自动扫描并注册routes.py模块中所有符合条件的函数
+# v 0.1 - 要求在routes.py中直接在导入模块时，不能直接导入函数名
+# v 0.2 -
 def add_routes(app, module_name):
-    n = module_name.rfind('.')
+    n = module_name.rfind('.')      # routes.py -> n = 6
     if n == (-1):
         mod = __import__(module_name, globals(), locals())
+        print('mod: ', mod)
+        # mod:  <module 'routes' from 'D:\\MyDocument\\MyDevelopment\\PyCharmProjects\\Basics\\webapp\\www\\routes.py'>
     else:
         name = module_name[n+1:]
         mod = getattr(__import__(module_name[:n], globals(), locals(), [name]), name)
+        print('2mod: ', mod)
+    print('dir(mod): ', dir(mod))
     for attr in dir(mod):
-        if attr.startswith('_'):
+        if attr.startswith('_'):        # 跳过以下划线'_'开头的模块属性
             continue
-        fn = getattr(mod, attr)
-        if callable(fn):
-            method = getattr(fn, '__method__', None)
-            path = getattr(fn, '__route__', None)
-            if method and path:
-                # noinspection PyTypeChecker
-                add_route(app, fn)                       # add_route
+        if attr in ['get', 'post']:     # 跳过get/post装饰器函数
+            continue
+        fn = getattr(mod, attr)         # function or module or class
+        print('getattr(mod, attr): ', fn)
+        # if callable(fn):                # if function
+        #     method = getattr(fn, '__method__', None)
+        #     path = getattr(fn, '__route__', None)
+        #     if method and path:
+        #         # noinspection PyTypeChecker
+        #         add_route(app, fn)
+        if isinstance(fn, types.FunctionType):      # function
+            add_route(app, fn)
 
 
+'''
+dir(mod):  [
+    'APIError',
+    'APIResourceNotFoundError',
+    'APIValueError',
+    'Blog',
+    'Comment',
+    'Page',
+    'User',
+    '__builtins__',
+    '__cached__',
+    '__doc__',
+    '__file__',
+    '__loader__',
+    '__name__',
+    '__package__',
+    '__spec__',
+    'api_blogs',
+    'api_comments',
+    'api_create_blog',
+    'api_create_comment',
+    'api_delete_blog',
+    'api_delete_comments',
+    'api_get_blog',
+    'api_get_users',
+    'api_register_user',
+    'api_update_blog',
+    'authenticate',
+    'get',                      #
+    'get_blog',
+    'hashlib',
+    'helper',
+    'index',
+    'json',
+    'logging',
+    'manage',
+    'manage_blogs',
+    'manage_comments',
+    'manage_create_blog',
+    'manage_edit_blog',
+    'manage_users',
+    'markdown2',
+    'next_id',                  #
+    'post',                     #
+    'register',
+    'signin',
+    'signout',
+    'test',
+    'web'
+]
 
-
-
-
-
-
-
-
-
-
-
-
-
+'''

@@ -2,7 +2,7 @@
 -- > cd www/
 -- > mysql -u root -proot@42 < schema.sql
 
--- drop database if exists awesome;
+drop database if exists awesome;
 
 create database if no exists awesome;
 

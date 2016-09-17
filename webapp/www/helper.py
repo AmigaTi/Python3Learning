@@ -10,10 +10,17 @@ from webapp.www.models import User
 from webapp.www.apierror import APIValueError
 from webapp.www.apierror import APIPermissionError
 from webapp.www.config import configs
-from webapp.www.models import next_id
+from webapp.www import ghelper
 
 
 logging.basicConfig(level=logging.INFO)
+
+
+"""
+to prevent errors from cross call:
+1. helper
+2. ghelper(get function helper)
+"""
 
 
 # 存储分页信息，用于分页显示Blog的功能
@@ -39,11 +46,11 @@ class Page(object):
             page = int(page_str)
         except ValueError:
             return default
-        return [default, page][page > 0]
+        return [default, page][page > 0]                        # [default, page][1] if page > 0
 
 
 # 检查用户
-# 数据库改表，有个列是0或1表示管理员
+# 直接数据库改表，有个列是0或1表示管理员
 def check_user(user, adminonly=True):
     if not adminonly and user is None:
         raise APIPermissionError('please signin first.')
@@ -141,15 +148,10 @@ def get_input(infos=None):
     return tuple(result)
 
 
-async def check_admin_user():
+async def init_admin_user():
     logging.info('check the default admin user...')
     users = await User.findall('admin=?', [True])  # 检查登录用户是否存在，使用邮箱来查找
-    return False if len(users) == 0 else True
-
-
-async def init_admin_user():
-    flag = await check_admin_user()
-    if flag is True:
+    if len(users) > 0:
         return
     logging.info('create admin user...')
     print('\n------------------------------------')
@@ -165,45 +167,11 @@ async def create_admin_user(name, email, password):
     sha1.update(password_str.encode('utf-8'))
     password = sha1.hexdigest()
 
-    uid = next_id()
+    uid = ghelper.get_unique_id()
     passwd_sha1 = make_passwd_sha1(uid, password)
     email_md5 = hashlib.md5(email.encode('utf-8')).hexdigest()
     image_str = 'http://www.gravatar.com/avatar/%s?d=mm&s=120' % email_md5
     user = User(id=uid, name=name.strip(), email=email, passwd=passwd_sha1, image=image_str, admin=True)
     await user.save()
-# --------------------------------------------------------------------------------------------
 
-
-# 获取定义在config.py中的关于数据库的配置信息
-def get_database_conf():
-    database = configs.database
-    host = database.host
-    port = database.port
-    user = database.user
-    password = database.password
-    db = database.db
-    return host, port, user, password, db       # tuple
-
-
-# 获取定义在config.py中的关于服务器的配置信息
-def get_server_conf():
-    server = configs.server
-    host = server.host
-    port = server.port
-    return host, port                           # tuple
-
-
-def get_cookie_conf():
-    cookie = configs.cookie
-    name = cookie.name
-    key = cookie.key
-    return name, key
-
-
-def get_cookie_name():
-    return configs.cookie.name
-
-
-def get_cookie_key():
-    return configs.cookie.key
 

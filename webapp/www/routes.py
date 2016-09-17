@@ -9,12 +9,12 @@ from aiohttp import web
 
 from webapp.www.coroweb import get
 from webapp.www.coroweb import post
-from webapp.www.models import next_id
 from webapp.www.models import User
 from webapp.www.models import Blog
 from webapp.www.models import Comment
 from webapp.www.helper import Page
 from webapp.www import helper
+from webapp.www import ghelper
 from webapp.www.apierror import APIError
 from webapp.www.apierror import APIValueError
 from webapp.www.apierror import APIResourceNotFoundError
@@ -131,7 +131,7 @@ async def authenticate(*, email, passwd):
         raise APIValueError('passwd', 'Invalid password.')
     # authenticate ok, set cookie:
     r = web.Response()
-    cookie_name = helper.get_cookie_name()
+    cookie_name = ghelper.get_cookie_name()
     r.set_cookie(cookie_name, helper.user2cookie(user, 86400), max_age=86400, httponly=True)
     user.passwd = '******'
     r.content_type = 'application/json'
@@ -143,7 +143,7 @@ async def authenticate(*, email, passwd):
 def signout(request):
     referer = request.headers.get('Referer')
     r = web.HTTPFound(referer or '/')
-    cookie_name = helper.get_cookie_name()
+    cookie_name = ghelper.get_cookie_name()
     r.set_cookie(cookie_name, '-deleted-', max_age=0, httponly=True)
     logging.info('user signed out.')
     return r
@@ -172,7 +172,7 @@ async def api_register_user(*, email, name, passwd):
     users = await User.findall('email=?', [email])
     if len(users) > 0:
         raise APIError('register: failed', 'email', 'Email is already in use.')
-    uid = next_id()
+    uid = ghelper.get_unique_id()                    # helper.get_unique_id
     passwd_sha1 = helper.make_passwd_sha1(uid, passwd)
     email_md5 = hashlib.md5(email.encode('utf-8')).hexdigest()
     image_str = 'http://www.gravatar.com/avatar/%s?d=mm&s=120' % email_md5
@@ -180,7 +180,7 @@ async def api_register_user(*, email, name, passwd):
     await user.save()           # 保存注册用户的信息
     # make session cookie:
     r = web.Response()
-    cookie_name = helper.get_cookie_name()
+    cookie_name = ghelper.get_cookie_name()
     r.set_cookie(cookie_name, helper.user2cookie(user, 86400), max_age=86400, httponly=True)   # 86400s = 24h = a day
     user.passwd = '******'
     r.content_type = 'application/json'

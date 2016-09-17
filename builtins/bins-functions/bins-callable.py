@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
+import types
+
+
 # callable(object)
 
 # Return True if the object argument appears callable, False if not.
@@ -35,14 +38,22 @@ class Student2(object):
     def __call__(self):
         pass
 
-print(callable(hello))          # True
+print(isinstance(hello, types.FunctionType))            # True
+print(type(hello), callable(hello))          # <class 'function'> True
+print(hasattr(hello, '__call__'))           # True
+print('------------------------------')
 
-print(callable(Student))        # True
+print(isinstance(Student, types.FunctionType))          # False
+print(type(Student), callable(Student))        # <class 'type'> True
+print(hasattr(Student, '__call__'))             # True
+print('------------------------------')
 
 stu = Student('lucas')
-print(callable(stu))            # False
+print(type(stu), callable(stu))            # <class '__main__.Student'> False //没有实现__call__方法
+print(hasattr(stu, '__call__'))             # False
+print('------------------------------')
 
 stu2 = Student2('lucas')
-print(callable(stu2))            # True
-
+print(type(stu2), callable(stu2))            # <class '__main__.Student2'> True
+print(hasattr(stu2, '__call__'))             # True
 

@@ -6,7 +6,8 @@ import time
 import logging
 
 from datetime import datetime
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment
+from jinja2 import FileSystemLoader
 
 
 logging.basicConfig(level=logging.INFO)
