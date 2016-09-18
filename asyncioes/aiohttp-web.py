@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import asyncio
+
 from aiohttp import web
+from urllib import parse        # Parse a query string in the URL
 
 # reference
 # http://aiohttp.readthedocs.io/en/stable/web.html
@@ -55,12 +57,21 @@ from aiohttp import web
 #     return web.Response()
 #
 async def index(request):
-    await asyncio.sleep(0.5)
+    await asyncio.sleep(0.1)
     return web.Response(body=b'<h1>Hello world and hello me!</h1>')
 
 
 async def greeting(request):
-    await asyncio.sleep(0.5)
+    await asyncio.sleep(0.1)
+    print('request.match_info\n', request.match_info)
+    print('request.query_string\n', request.query_string)
+    kw = dict()
+    for k, v in parse.parse_qs(request.query_string, True).items():
+        kw[k] = v[0]
+        print('%s => %s' % (k, v))
+    print(kw)
+    kw.update(dict(**request.match_info))
+    print(kw)
     name = request.match_info.get('name', 'Anonymous')      # request.match_info['name']
     text = '<h1>hello, <i style=\'color: rgba(0, 0, 255, 0.8);\'>{}!</i></h1>'.format(name)
     return web.Response(body=text.encode('utf-8'))
@@ -86,10 +97,21 @@ loop.run_forever()                              # Run until stop() is called
 
 # testing in browser
 # http://localhost:9898/
-# http://localhost:9898/hello/firstme
+# http://localhost:9898/greet/firstme
+# http://localhost:9898/greet/firstme?id=2
+# http://localhost:9898/greet/firstme?id=2&name=hellome
 
 '''
 Server started at http://127.0.0.1:9898...
+
+request.match_info
+ <MatchInfo {'name': 'firstme'}: <ResourceRoute [GET] <DynamicResource  /greet/{name} -> <function greeting at 0x02577C00>>
+request.query_string
+ id=2&name=hellome
+name => ['hellome']
+id => ['2']
+{'id': '2', 'name': 'hellome'}
+{'id': '2', 'name': 'firstme'}
 '''
 
 

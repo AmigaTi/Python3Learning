@@ -10,11 +10,8 @@ from webapp.www import orm
 from webapp.www import helper
 from webapp.www import ghelper
 from webapp.www import coroweb
-from webapp.www.middlewares import logger_factory
-from webapp.www.middlewares import auth_factory
-from webapp.www.middlewares import response_factory
-from webapp.www.renderengine import init_jinja2
-from webapp.www.renderengine import datetime_filter
+from webapp.www import render
+from webapp.www.middlewares import factory
 
 
 logging.basicConfig(level=logging.INFO)
@@ -26,12 +23,12 @@ async def init(loop):
     # 1. Create an Application instance, Application is a dict-like object
     app = web.Application(
         loop=loop,
-        middlewares=[logger_factory, auth_factory, response_factory]        # Register Middleware factory
+        middlewares=[factory.log, factory.auth, factory.data, factory.resp]        # Register Middleware factory
     )
     # init to create a admin user when create server firstly
     await helper.init_admin_user()
     # 2. Initialize render templates config
-    init_jinja2(app, filters=dict(datetime=datetime_filter))
+    render.init_jinja2(app, filters=dict(datetime=render.datetime_filter))
     # 3. Register the request handler with the application’s router on a particular HTTP method and path
     # handler -> RequestHandler decorator -> app.router.add_route
     coroweb.add_routes(app, 'routes')

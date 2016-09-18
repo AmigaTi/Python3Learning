@@ -9,7 +9,6 @@ import logging
 from webapp.www.models import User
 from webapp.www.apierror import APIValueError
 from webapp.www.apierror import APIPermissionError
-from webapp.www.config import configs
 from webapp.www import ghelper
 
 
@@ -59,10 +58,16 @@ def text2html(text):
     return ''.join(lines)
 
 
+def isadmin(user):
+    if user is None or not user.admin:
+        return False
+    return True
+
+
 # 检查用户
 # 直接数据库改表，有个列是0或1表示管理员
 def check_user(user, adminonly=True):
-    if not adminonly and user is None:
+    if user is None and not adminonly:
         raise APIPermissionError('please signin first.')
     if user is None or not user.admin:
         raise APIPermissionError('just admin only')
@@ -93,7 +98,7 @@ def make_passwd_sha1(uid, password):
 
 
 def make_user_sha1(user, expires):
-    user_str = '%s-%s-%s-%s' % (user.id, user.passwd, expires, configs.cookie.key)
+    user_str = '%s-%s-%s-%s' % (user.id, user.passwd, expires, ghelper.get_cookie_key())
     return hashlib.sha1(user_str.encode('utf-8')).hexdigest()
 
 
@@ -174,5 +179,4 @@ async def create_admin_user(name, email, password):
     image_str = 'http://www.gravatar.com/avatar/%s?d=mm&s=120' % email_md5
     user = User(id=uid, name=name.strip(), email=email, passwd=passwd_sha1, image=image_str, admin=True)
     await user.save()
-
 

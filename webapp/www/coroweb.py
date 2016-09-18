@@ -64,7 +64,7 @@ def handler_factory(func):
     async def route_handler(request):
         # 获取函数的参数表
         required_args = inspect.signature(func).parameters
-        logging.info('required args: %s' % required_args)
+        logging.info('required args: %s' % [name for name, param in required_args.items()])
 
         # 获取从GET或POST传进来的参数值，如果函数参数表有这参数名就加入
         kw = {arg: value for arg, value in request.__data__.items() if arg in required_args}
@@ -102,6 +102,7 @@ def handler_factory(func):
 # KEYWORD_ONLY                 # 命名关键字参数 - *, arg
 
 
+# 获取必须的参数，即没有默认值的参数
 def get_required_kw_args(fn):
     args = []
     params = inspect.signature(fn).parameters   #
@@ -175,7 +176,7 @@ class RequestHandler(object):
         self._named_kw_args = get_named_kw_args(fn)
         self._required_kw_args = get_required_kw_args(fn)
 
-    # rh = RequestHandler(app, fn), rh(request)
+    # rh = RequestHandler(fn), rh(request)
     # 即任何类，只需要定义一个__call__()方法，就可以直接对实例进行调用
     async def __call__(self, request):
         kw = None
@@ -195,32 +196,35 @@ class RequestHandler(object):
                 else:
                     return web.HTTPBadRequest(text='Unsupported Content-Type: %s' % request.content_type)   # ??
             if request.method == 'GET':
-                qs = request.query_string           # The query string in the URL, e.g., url?id=10
+                qs = request.query_string           # The query string in the URL, e.g., /app/blog?id=10中的id=10
                 if qs:
                     kw = dict()
                     for k, v in parse.parse_qs(qs, True).items():   # parse the Request.query_string
                         kw[k] = v[0]                # 保存请求参数键值对到kw字典中
-        if kw is None:
+
+        if kw is None:      # 如果post或get中没有携带参数则直接在url路径中获取参数
             kw = dict(**request.match_info)         # request.match_info // @get('/api/blogs/{id}')
-        else:
+        else:               # kw from post/get
             if not self._has_var_kw_arg and self._named_kw_args:    # 如果不是VAR_KEYWORD
                 # remove all unnamed kw:
-                copy = dict()                       # 只保存handler函数中声明的且又存在kw中的参数
+                copy = dict()
                 for name in self._named_kw_args:
                     if name in kw:
-                        copy[name] = kw[name]
+                        copy[name] = kw[name]       # 只保存handler函数中的声明的命名关键字参数
                 kw = copy                           #
             # check named arg:
             for k, v in request.match_info.items():   # result of route resolving // @get('/api/blogs/{id}')
                 if k in kw:
                     logging.warning('Duplicate arg name in named arg and kw args: %s' % k)
                 kw[k] = v                              # 保存route 解析出来的值// @get('/api/blogs/{id}')中的id
+
         if self._has_request_arg:                           # ??
             kw['request'] = request          # 如果handlers.py中的handler声明了request参数则将request保存到kw中
+
         # check required kw:
-        if self._required_kw_args:
+        if self._required_kw_args:          # 获取必须的参数，即没有默认值的参数
             for name in self._required_kw_args:
-                if name not in kw:          #
+                if name not in kw:          # 必要的routes.py中的handler函数参数是否在kw中已存在
                     return web.HTTPBadRequest(text='Missing argument: %s' % name)   # ?? specify keyword
         logging.info('call handler with args: %s' % str(kw))
         try:

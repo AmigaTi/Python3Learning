@@ -49,6 +49,7 @@
       <w>endfor</w>
       <w>endmacro</w>
       <w>findnum</w>
+      <w>firstme</w>
       <w>fromtimestamp</w>
       <w>functools</w>
       <w>gallahad</w>
@@ -72,6 +73,7 @@
       <w>indeep</w>
       <w>inet</w>
       <w>infos</w>
+      <w>isadmin</w>
       <w>ishuhui</w>
       <w>jambo</w>
       <w>jawahar</w>

@@ -32,7 +32,7 @@ logging.basicConfig(level=logging.INFO)
 
 # 启动MySQL后台服务程序：../bin/mysqld.exe
 # 启动Web 服务器： python app.py
-# 浏览器访问：http://localhost:9000/test
+# 本地浏览器访问：http://localhost:9000/test
 @get('/test')
 async def test():
     users = await User.findall()
@@ -106,8 +106,6 @@ async def api_get_users(*, page='1'):
 # 这样后续的URL处理函数就可以直接拿到登录用户。
 
 
-# 用户登录界面
-# signin.html中的js代码会将登录信息封装成JSON，然后当点击按钮时自动提交POST请求/api/authenticate
 @get('/signin')
 def signin():
     return {
@@ -147,9 +145,6 @@ def signout(request):
     return r
 
 
-# Server -> Client
-# 用户注册界面 - 由服务器端Server返回给浏览器客户端Client
-# 当点击注册按钮时，自动提交POST请求/api/users
 @get('/register')
 def register():
     return {
@@ -205,7 +200,6 @@ def manage_blogs(*, page='1'):
     }
 
 
-# 使用简单易用的MVVM框架Vue.js来实现创建Blog的页面manage_blog_edit.html
 @get('/manage/blogs/create')
 def manage_create_blog():
     return {
