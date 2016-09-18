@@ -9,7 +9,7 @@ from aiohttp import web
 from webapp.www import orm
 from webapp.www import helper
 from webapp.www import ghelper
-from webapp.www.coroweb import add_routes, add_static
+from webapp.www import coroweb
 from webapp.www.middlewares import logger_factory
 from webapp.www.middlewares import auth_factory
 from webapp.www.middlewares import response_factory
@@ -34,9 +34,9 @@ async def init(loop):
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     # 3. Register the request handler with the application’s router on a particular HTTP method and path
     # handler -> RequestHandler decorator -> app.router.add_route
-    add_routes(app, 'routes')
+    coroweb.add_routes(app, 'routes')
     # 4. # Adds a router and a handler for returning static files (Images, JavaScripts, Fonts, CSS files etc.)
-    add_static(app)
+    coroweb.add_static(app)
     # 5. Create a TCP server (socket type SOCK_STREAM) bound to host and port
     # web.Application.make_handler - Creates HTTP protocol factory for handling requests
     host, port = ghelper.get_server_conf()

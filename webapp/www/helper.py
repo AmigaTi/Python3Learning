@@ -17,7 +17,8 @@ logging.basicConfig(level=logging.INFO)
 
 
 """
-to prevent errors from cross call:
+to prevent errors from cross call,
+divide helper file to helper file and ghelper file:
 1. helper
 2. ghelper(get function helper)
 """
@@ -49,6 +50,15 @@ class Page(object):
         return [default, page][page > 0]                        # [default, page][1] if page > 0
 
 
+# 将文本转换成html
+def text2html(text):
+    lines = map(
+        lambda s: '<p>%s</p>' % s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'),
+        filter(lambda s: s.strip() != '', text.split('\n'))
+    )
+    return ''.join(lines)
+
+
 # 检查用户
 # 直接数据库改表，有个列是0或1表示管理员
 def check_user(user, adminonly=True):
@@ -75,15 +85,6 @@ def check_email_password(email, password):
         raise APIValueError('Invalid email.')
     if not password or not _RE_SHA1.match(password):
         raise APIValueError('Invalid password.')
-
-
-# 将文本装换成html
-def text2html(text):
-    lines = map(
-        lambda s: '<p>%s</p>' % s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'),
-        filter(lambda s: s.strip() != '', text.split('\n'))
-    )
-    return ''.join(lines)
 
 
 def make_passwd_sha1(uid, password):

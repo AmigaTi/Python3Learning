@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import time
-
 from webapp.www.orm import Model
 from webapp.www.fields import BooleanField
 from webapp.www.fields import StringField
@@ -15,21 +13,16 @@ from webapp.www import ghelper
 # 并且，缺省值可以作为函数对象传入，在调用save()时自动计算。
 
 
-# 复杂的id构成目的是为了避免出现相同，即产生唯一的id
-# def next_id():
-#     return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)   # 15 + 32 + 3 = 50
-
-
 class User(Model):
     __table__ = 'users'
 
     id = StringField(primary_key=True, default=ghelper.get_unique_id, ddl='varchar(50)')
     email = StringField(ddl='varchar(50)')
     passwd = StringField(ddl='varchar(50)')
-    admin = BooleanField()                      # admin
+    admin = BooleanField()                      # admin if True
     name = StringField(ddl='varchar(50)')
     image = StringField(ddl='varchar(500)')
-    created_at = FloatField(default=time.time)
+    created_at = FloatField(default=ghelper.get_created_time)
 
 
 class Blog(Model):
@@ -42,7 +35,7 @@ class Blog(Model):
     name = StringField(ddl='varchar(50)')
     summary = StringField(ddl='varchar(200)')
     content = TextField()
-    created_at = FloatField(default=time.time)
+    created_at = FloatField(default=ghelper.get_created_time)
 
 
 class Comment(Model):
@@ -54,5 +47,5 @@ class Comment(Model):
     user_name = StringField(ddl='varchar(50)')
     user_image = StringField(ddl='varchar(500)')
     content = TextField()
-    created_at = FloatField(default=time.time)
+    created_at = FloatField(default=ghelper.get_created_time)
 

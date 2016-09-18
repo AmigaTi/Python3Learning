@@ -17,6 +17,10 @@ def get_unique_id():
     return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)  # 15 + 32 + 3 = 50
 
 
+def get_created_time():
+    return time.time()
+
+
 # --------------------------------------------------------------------------------------------
 # 获取定义在config.py中的关于数据库的配置信息
 def get_database_conf():

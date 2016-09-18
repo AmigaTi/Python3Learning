@@ -121,8 +121,6 @@ def signin():
 @post('/api/authenticate')
 async def authenticate(*, email, passwd):
     helper.check_email_password(email, passwd)
-    # (email, passwd) = (linuxfor@163.com, 91f8ad871ca5e3f20ba35c0f7f3aeee0de1428a0)
-    logging.info('(email, passwd) = (%s, %s)' % (email, passwd))
     users = await User.findall('email=?', [email])              # 检查登录用户是否存在，使用邮箱来查找
     if len(users) == 0:
         raise APIValueError('email', 'Email not exist.')        # 登录时没有验证邮箱地址的格式是否正确
@@ -167,8 +165,6 @@ def register():
 async def api_register_user(*, email, name, passwd):
     helper.check_string(name=name)
     helper.check_email_password(email, passwd)
-    # register (email, passwd) = (hellome@163.com, 6496432b3fb78e671ab62ba675862a4b493ab61e)
-    logging.info('register (email, passwd) = (%s, %s)' % (email, passwd))
     users = await User.findall('email=?', [email])
     if len(users) > 0:
         raise APIError('register: failed', 'email', 'Email is already in use.')
