@@ -176,7 +176,7 @@ with open('./info_web_service.soap', 'r', encoding='utf-8') as f:
         print('%s%s%d' % (' ' * 4 * indent, s, indent))
         result_format.append('%s%s' % (' ' * 4 * indent, s))
 
-with open('./info_web_service_formated.soap', 'w', encoding='utf-8') as f:
+with open('./info_web_service_formatted.soap', 'w', encoding='utf-8') as f:
     for s in result_format:
         f.write(s)
         f.write('\n')
