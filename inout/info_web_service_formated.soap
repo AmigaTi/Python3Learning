@@ -1,0 +1,59 @@
+anyType{
+    schema=anyType{
+        element=anyType{
+            complexType=anyType{
+                choice=anyType{
+                    element=anyType{
+                        complexType=anyType{
+                            sequence=anyType{
+                                element=anyType{}; 
+                                element=anyType{}; 
+                                element=anyType{}; 
+                                element=anyType{}; 
+                                element=anyType{}; 
+                            }; 
+                        }; 
+                    }; 
+                    element=anyType{
+                        complexType=anyType{
+                            sequence=anyType{
+                                element=anyType{}; 
+                            }; 
+                        }; 
+                    }; 
+                    element=anyType{
+                        complexType=anyType{
+                            sequence=anyType{
+                                element=anyType{}; 
+                                element=anyType{}; 
+                            }; 
+                        }; 
+                    }; 
+                }; 
+            }; 
+        }; 
+    }; 
+    diffgram=anyType{
+        Dictionary=anyType{
+            Trans=anyType{
+                WordKey=shell; 
+                Pron=ʃel; 
+                Info=anyType{}; 
+                Translation=n. 贝壳,壳,外形；v. 去壳,脱落；n.[计算机] DOS命令 : 安装备用的COMMAND.COM文件, 并改变环境尺寸; 
+                Mp3=12448.mp3; 
+            }; 
+            Sentence=anyType{
+                Orig=Shells were bursting all around.; 
+                Trans=炮弹在四处爆炸。; 
+            }; 
+            Sentence=anyType{
+                Orig=There is an ornament made of shells on the wall.; 
+                Trans=墙上有一个贝壳做成的装饰品。; 
+            }; 
+            Sentence=anyType{
+                Orig=All that remained of the building after the fire was an empty shell.; 
+                Trans=一场大火过后，这座建筑剩下的只是一个空壳。; 
+            }; 
+        }; 
+    }; 
+}
