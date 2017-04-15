@@ -105,7 +105,7 @@ with open('./info_web_service.soap', 'r', encoding='utf-8') as f:
             print(re_soap.search(soap).group(1))
         # print(re_soap.search(soap).group(2))
         soap = re_soap.search(soap).group(2)
-    if re_soap2.search(soap):
+    if re_soap2.search(soap):           # process the tail
         while re_soap2.search(soap):
             result.append(re_soap2.search(soap).group(1))
             print(re_soap2.search(soap).group(1))

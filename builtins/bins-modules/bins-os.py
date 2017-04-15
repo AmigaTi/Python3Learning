@@ -34,3 +34,6 @@ print(os.path.abspath('.'))
 
 # D:\MyDocument\MyDevelopment\PyCharmProjects\Basics\builtins\bins-modules
 print(os.getcwd())
+
+# 执行cmd环境下的java命令
+os.system('java -version')

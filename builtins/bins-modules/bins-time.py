@@ -7,6 +7,7 @@ import time
 t = time.time()                     # Return the time in seconds since the epoch as a floating point number
 t1000 = int(t * 1000)
 
+print(str(t))                       # 1492277178.1409357
 print('t: %d' % t)                  # t: 1473827255
 print('t1000: %015d' % t1000)       # t1000: 001473827255865
 
