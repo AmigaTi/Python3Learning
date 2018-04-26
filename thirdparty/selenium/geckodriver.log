@@ -1,0 +1,171 @@
+1524461733748	geckodriver	INFO	geckodriver 0.20.1
+1524461733755	geckodriver	INFO	Listening on 127.0.0.1:4824
+1524461736800	mozrunner::runner	INFO	Running command: "D:\\appsoft\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\winfor\\AppData\\Local\\Temp\\rust_mozprofile.dMMGLaNCgMxt"
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524461737952	Marionette	INFO	Enabled via --marionette
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524461739504	Marionette	INFO	Listening on port 4832
+1524461739912	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 168320, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 168320, Chrome_ChildThread] WARNING: pipe error: 109: file[Child 167992, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 167992, Chrome_ChildThread] WARNING: pipe error: 109: *** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524501677871	geckodriver	INFO	geckodriver 0.20.1
+1524501677871	geckodriver	INFO	Listening on 127.0.0.1:5431
+1524501681012	mozrunner::runner	INFO	Running command: "D:\\appsoft\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\winfor\\AppData\\Local\\Temp\\rust_mozprofile.yAazkE1VptSL"
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524501681818	Marionette	INFO	Enabled via --marionette
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524501683166	Marionette	INFO	Listening on port 5439
+1524501684208	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 15872, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 15872, Chrome_ChildThread] WARNING[Child 1992, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 1992, Chrome_ChildThread] WARNING: [Child 14132, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 14132, Chrome_ChildTh*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[GPU 14256, Chrome_ChildThread] WARNING: pipe error: 109: file z:/b
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524502521295	geckodriver	INFO	geckodriver 0.20.1
+1524502521310	geckodriver	INFO	Listening on 127.0.0.1:5598
+1524502524326	mozrunner::runner	INFO	Running command: "D:\\appsoft\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\winfor\\AppData\\Local\\Temp\\rust_mozprofile.o3MBfqhU81G0"
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524502524664	Marionette	INFO	Enabled via --marionette
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524502525554	Marionette	INFO	Listening on port 5606
+1524502525876	Marionette	WARN	TLS certificate errors will be ignored for this session
+[C[Child 22108, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 22108, Chrome_ChildThread] WARNING: pipe error: 109: file z:[Parent 21960, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 21800, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 21800, Chrome_ChildThread] WARNING: pipe error: 1[GPU 22344, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_ch
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524502755036	Marionette	INFO	Listening on port 5727
+1524502755342	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 25392, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 25392, Chrome_ChildThread] WARNING: pipe error:[Parent 23680, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 24604, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 24604, Chrome_ChildThread] WARNIN[Child 24488, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 24488, Chrome_ChildThread] WARNING: pipe error: 1*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524503084281	geckodriver	INFO	geckodriver 0.20.1
+1524503084297	geckodriver	INFO	Listening on 127.0.0.1:5785
+1524503087297	mozrunner::runner	INFO	Running command: "D:\\appsoft\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\winfor\\AppData\\Local\\Temp\\rust_mozprofile.Ne84FrJiorJ5"
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524503087640	Marionette	INFO	Enabled via --marionette
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524503088584	Marionette	INFO	Listening on port 5793
+1524503088846	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 27244, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 27244, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 27260, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 27260, Chrome_ChildThread] WARNING: pipe error: 109: f[Child 28008, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28008, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 27244, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 27408, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 27408, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[GPU 27276, Chrome_ChildThread] WARNING: pipe error: 109: fi
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+836	Marionette	INFO	Listening on port 5841
+1524503174142	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 29272, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 29272, Chrome_ChildThread] WARNING: pipe error: 109: [Child 29512, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 29512, Chrome_ChildThread] WARNING: pip[Parent 25904, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28884, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28884, Chrome_ChildThread] WARNING: pipe error: 109: file z:/*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524503248423	geckodriver	INFO	geckodriver 0.20.1
+1524503248439	geckodriver	INFO	Listening on 127.0.0.1:5885
+1524503251471	mozrunner::runner	INFO	Running command: "D:\\appsoft\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\winfor\\AppData\\Local\\Temp\\rust_mozprofile.p7uBRWOZf5i4"
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524503251802	Marionette	INFO	Enabled via --marionette
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524503252676	Marionette	INFO	Listening on port 5893
+1524503253010	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 31456, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 31456, Chrome_ChildThread] WARNING: pipe error: 1[Parent 30196, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 31148, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 31148, Chrome_ChildThread] WARNING1524503277608	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+[Parent 30196, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 30708, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 30708, Chrome_ChildThread] WARNING: pipe error:*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[GPU 30220, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524528099972	geckodriver	INFO	geckodriver 0.20.1
+1524528099988	geckodriver	INFO	Listening on 127.0.0.1:6335
+1524528103004	mozrunner::runner	INFO	Running command: "D:\\appsoft\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\winfor\\AppData\\Local\\Temp\\rust_mozprofile.UtlC8aBTnVK1"
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524528103438	Marionette	INFO	Enabled via --marionette
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1]: Potential driver version mismatch ignored due to missing DLLs igd10umd64 v= and igd10iumd64 v=
+Unable to read VR Path Registry from C:\Users\winfor\AppData\Local\openvr\openvrpaths.vrpath
+1524528104308	Marionette	INFO	Listening on port 6343
+1524528104572	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 73436, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 73436, Chrome_ChildThread] WARNING: pipe error: 109: file [Parent 71764, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 71764, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 72824, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 72824, Chrome_ChildThread] WARNING: pipe error: 10*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[GPU 58428, Chrome_ChildThread] WARNI
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+

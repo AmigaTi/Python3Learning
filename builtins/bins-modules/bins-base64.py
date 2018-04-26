@@ -69,6 +69,7 @@ def safe_base64_decode(s):
         print('automatically modified: %s => %s' % (s, str_bytes))
         return base64.b64decode(str_bytes)
 
+
 # 测试:
 assert b'abcd' == safe_base64_decode(b'YWJjZA=='), safe_base64_decode('YWJjZA==')
 assert b'abcd' == safe_base64_decode(b'YWJjZA'), safe_base64_decode('YWJjZA')
@@ -85,6 +86,7 @@ Pass
 # bytes & str
 def safe_base64_decode2(s):
     return base64.b64decode(s + b'=' * (4 - len(s) % 4))
+
 
 print('start safe_base64_decode2...')
 assert b'abcd' == safe_base64_decode2(b'YWJjZA=='), safe_base64_decode2('YWJjZA==')

@@ -64,6 +64,3 @@ next_post_info = {key: next_post[key] for key in next_post_info.keys()}  # ÂèñÈÉ
 
 print('next_post_info: %s' % str(next_post_info))   # next_post_info: {'next_post': 839, 'next_post_day': '2016-09-15'}
 
-
-
-
