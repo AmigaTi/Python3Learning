@@ -10,6 +10,10 @@ from PIL import ImageFilter
 # Python 3.5.2
 # ImagePreview: Windows Photo View
 
+'''
+pip install Pillow
+'''
+
 
 # 图像缩放
 def image_thumbnail():
