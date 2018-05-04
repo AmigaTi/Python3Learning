@@ -62,6 +62,7 @@ Label(root, fg='white', bg='SystemButtonShadow', text='Windows').pack(side=BOTTO
 # nw      n       ne
 # w     center    e
 # sw      s       se
+# n - north, s - south, w - west, e - east
 # 左对齐，文本居中
 Label(root, text='a life of bits and pieces, make it better.', bg='gray25', width=40, height=3, wraplength=80, justify='left').pack()
 # 居中对齐，文本居左
