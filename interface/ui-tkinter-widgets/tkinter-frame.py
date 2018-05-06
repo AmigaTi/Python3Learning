@@ -3,16 +3,14 @@
 
 from tkinter import *
 
-# Frame - 在屏幕上创建一块矩形区域,多作为容器来布局窗体
-#
+# Frame - 在屏幕上创建一块矩形区域，多作为容器来布局窗体
 # 用法
-#
 # 　　Frame(根对象, [属性列表])
 
 
-root = Tk()                 # 初始化TK()
-root.title('Frame')      # 设置窗口标题
-root.geometry('300x200')    # 设置窗口大小
+root = Tk()                         # 初始化TK()
+root.title('Tkinter - Frame')       # 设置窗口标题
+root.geometry('300x200')            # 设置窗口大小
 root.resizable(width=False, height=True)    # 设置窗口的长宽是否可变
 
 Label(root, text='校训', font=('Arial', 20)).pack()
@@ -34,22 +32,4 @@ frm_r.pack(side=RIGHT)
 frm.pack()
 
 root.mainloop()             # 进入消息循环
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
