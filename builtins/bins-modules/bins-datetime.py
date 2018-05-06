@@ -63,7 +63,10 @@ print(dt)                           # 2016-08-25 01:16:16
 
 t = time.gmtime(time.time())
 
-print(s)                            # China Standard Time
+print(t)                            # China Standard Time
+'''
+time.struct_time(tm_year=2018, tm_mon=5, tm_mday=6, tm_hour=19, tm_min=41, tm_sec=23, tm_wday=6, tm_yday=126, tm_isdst=0)
+'''
 # -------------------------------------------------
 date_str = 'Wed, 27 May 2015 11:00 am CST'[:-4]     # 去掉CST时区信息
 format_str = r'%a, %d %b %Y %I:%M %p'               # %Z无法正确解析
