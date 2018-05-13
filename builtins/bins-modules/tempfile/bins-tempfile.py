@@ -71,6 +71,20 @@ def make_named_temp_file_with_option():
     print('exist: {}'.format(os.path.exists(temp.name)))    # exist: False
 
 
+# 仅仅创建临时目录名称，需要使用open()先打开才能进行操作
+def make_temp_dir_just():
+    temp_dir = tempfile.mkdtemp()
+    temp_file = temp_dir + '/temp.txt'
+    print("temp_file: {}".format(temp_file))    # temp_file: C:\Users\xxx\AppData\Local\Temp\tmpwqt6js5f/temp.txt
+
+
+# 仅仅创建临时文件名称，需要使用open()先打开才能进行操作
+def make_temp_file_just():
+    temp_file = tempfile.mktemp()
+    print("temp_dir: {}".format(tempfile.gettempdir()))     # temp_dir: C:\Users\xxx\AppData\Local\Temp
+    print("temp_file: {}".format(temp_file))                # temp_file: C:\Users\xxx\AppData\Local\Temp\tmpe25n8gp3
+
+
 if __name__ == '__main__':
     make_file()
     print('==' * 20)
@@ -79,3 +93,7 @@ if __name__ == '__main__':
     make_named_temp_file()
     print('==' * 20)
     make_named_temp_file_with_option()
+    print('==' * 20)
+    make_temp_dir_just()
+    print('==' * 20)
+    make_temp_file_just()
