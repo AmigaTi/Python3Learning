@@ -12,6 +12,12 @@
 # https://docs.python.org/3/library/exceptions.html#exception-hierarchy
 
 
+# Python内置的try...except...finally用来处理错误十分方便。
+# 出错时，会分析错误信息并定位错误发生的代码位置才是最关键的。
+# 程序也可以主动抛出错误，让调用者来处理相应的错误。
+# 但是应该在文档中写清楚可能会抛出哪些错误，以及错误产生的原因。
+
+
 try:
     print('try...')
     r = 10 / 0
