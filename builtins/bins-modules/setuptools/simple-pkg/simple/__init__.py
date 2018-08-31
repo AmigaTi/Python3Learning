@@ -1,0 +1,1 @@
+from .simple import get_info
