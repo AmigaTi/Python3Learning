@@ -40,16 +40,16 @@ class MainWindow(QWidget):
         grid.addWidget(review, 3, 0)
         grid.addWidget(reviewEdit, 3, 1, 5, 1)      # 设置组件的跨行和跨列参数
 
-        hbox = QHBoxLayout()
+        hbox = QHBoxLayout()            # 创建水平箱布局，用于放置两个按钮
         hbox.addStretch(1)              # 增加一个可伸缩空间，将按钮推挤到窗口右边
         hbox.addWidget(okBtn)
         hbox.addWidget(cancelBtn)
 
-        vbox = QVBoxLayout()
-        vbox.addLayout(grid)
-        vbox.addLayout(hbox)
+        vbox = QVBoxLayout()            # 创建垂直箱布局，用于放置其他布局
+        vbox.addLayout(grid)            # 先添加网格布局
+        vbox.addLayout(hbox)            # 再添加水平箱布局
 
-        self.setLayout(vbox)
+        self.setLayout(vbox)            # 设置为垂直箱布局
 
         self.setGeometry(300, 300, 350, 300)
         self.setWindowTitle('Review')
