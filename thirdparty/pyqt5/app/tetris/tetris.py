@@ -55,7 +55,6 @@ class Board(QFrame):
 
     def __init__(self, parent):
         super().__init__(parent)
-
         self.initBoard()
 
     def initBoard(self):
@@ -110,11 +109,9 @@ class Board(QFrame):
             return
 
         self.isPaused = not self.isPaused
-
         if self.isPaused:
             self.timer.stop()
             self.msg2Statusbar.emit("paused")
-
         else:
             self.timer.start(Board.Speed, self)
             self.msg2Statusbar.emit(str(self.numLinesRemoved))
@@ -131,7 +128,6 @@ class Board(QFrame):
         for i in range(Board.BoardHeight):
             for j in range(Board.BoardWidth):
                 shape = self.shapeAt(j, Board.BoardHeight - i - 1)
-
                 if shape != Tetrominoe.NoShape:
                     self.drawSquare(painter,
                                     rect.left() + j * self.squareWidth(),
@@ -193,7 +189,6 @@ class Board(QFrame):
     def dropDown(self):
         '''drops down a shape'''
         newY = self.curY
-
         while newY > 0:
             if not self.tryMove(self.curPiece, self.curX, newY - 1):
                 break
@@ -264,7 +259,6 @@ class Board(QFrame):
     def tryMove(self, newPiece, newX, newY):
         '''tries to move a shape'''
         for i in range(4):
-
             x = newX + newPiece.x(i)
             y = newY - newPiece.y(i)
 
@@ -327,7 +321,6 @@ class Shape(object):
     def __init__(self):
         self.coords = [[0, 0] for i in range(4)]
         self.pieceShape = Tetrominoe.NoShape
-
         self.setShape(Tetrominoe.NoShape)
 
     def shape(self):
@@ -369,7 +362,6 @@ class Shape(object):
         m = self.coords[0][0]
         for i in range(4):
             m = min(m, self.coords[i][0])
-
         return m
 
     def maxX(self):
@@ -377,7 +369,6 @@ class Shape(object):
         m = self.coords[0][0]
         for i in range(4):
             m = max(m, self.coords[i][0])
-
         return m
 
     def minY(self):
@@ -385,7 +376,6 @@ class Shape(object):
         m = self.coords[0][1]
         for i in range(4):
             m = min(m, self.coords[i][1])
-
         return m
 
     def maxY(self):
@@ -393,7 +383,6 @@ class Shape(object):
         m = self.coords[0][1]
         for i in range(4):
             m = max(m, self.coords[i][1])
-
         return m
 
     def rotateLeft(self):
