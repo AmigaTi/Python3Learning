@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         self.show()
 
     def showFileDialog(self):
+        # 选中文件后，读出文件的内容，并设置成文本编辑框组件的显示文本
         fname = QFileDialog.getOpenFileName(self, 'Open file', '/home')
         if fname[0]:
             f = open(fname[0], 'r')
